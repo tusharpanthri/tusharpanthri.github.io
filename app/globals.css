@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #EEE9D8;
+  --color-near-black: #11100D;
+  --color-accent-yellow: #FFE119;
+  --color-accent-red: #FF4B2B;
+  --color-muted: #6E675A;
+}
+
+:root {
+  --background: #EEE9D8;
+  --foreground: #11100D;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  background-image: radial-gradient(var(--foreground) 0.5px, transparent 0.5px);
+  background-size: 30px 30px;
+  background-attachment: fixed;
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+@layer utilities {
+  .outline-text {
+    -webkit-text-stroke: 2px #11100D;
+    color: transparent;
+  }
+
+  .animate-in {
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+  }
+
+  .fade-in {
+    animation-name: fadeIn;
+  }
+
+  .slide-in-from-top {
+    animation-name: slideInFromTop;
+  }
+
+  .slide-in-from-bottom {
+    animation-name: slideInFromBottom;
+  }
+
+  .slide-in-from-left {
+    animation-name: slideInFromLeft;
+  }
+
+  .zoom-in {
+    animation-name: zoomIn;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInFromTop {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInFromBottom {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInFromLeft {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.delay-200 { animation-delay: 200ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-700 { animation-delay: 700ms; }
+.duration-700 { animation-duration: 700ms; }
+.duration-1000 { animation-duration: 1000ms; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #EEE9D8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #11100D;
+  border: 3px solid #EEE9D8;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF4B2B;
+}
+
+/* Selection */
+::selection {
+  background: #FFE119;
+  color: #11100D;
+}
