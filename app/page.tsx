@@ -54,6 +54,17 @@ export default function Home() {
       {/* Education Section */}
       <ResumeSection title="Education" items={resume.education} />
 
+      {/* Certifications Section */}
+      <ResumeSection 
+        title="Certifications" 
+        items={resume.certifications.map(cert => ({
+          company: cert.issuer,
+          role: cert.name,
+          period: cert.date,
+          logo: cert.logo
+        }))} 
+      />
+
       {/* Contact Section */}
       <section className="py-24 border-t-4 border-near-black bg-accent-yellow" id="contact">
         <div className="max-w-7xl mx-auto px-6 md:px-10 text-center">

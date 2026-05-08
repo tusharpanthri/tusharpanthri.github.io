@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { resume } from '@/data/resume';
 import { Download, Mail, Phone, ChevronDown } from 'lucide-react';
-import { Github, Linkedin } from '@/components/Icons';
 
 const Header = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
@@ -15,7 +14,7 @@ const Header = () => {
         </a>
 
         <nav className="hidden lg:flex items-center gap-8">
-          {['Experience', 'Projects', 'Education'].map((item) => (
+          {['Experience', 'Projects', 'Education', 'Certifications'].map((item) => (
             <a 
               key={item} 
               href={`#${item.toLowerCase()}`}
@@ -27,23 +26,13 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-3 md:gap-6">
-          {/* Social Icons - Hidden on small mobile */}
-          <div className="hidden sm:flex items-center gap-4">
-            <a href={resume.github} target="_blank" className="hover:text-accent-yellow transition-colors">
-              <Github size={20} />
-            </a>
-            <a href={resume.linkedin} target="_blank" className="hover:text-accent-yellow transition-colors">
-              <Linkedin size={20} />
-            </a>
-          </div>
-
           {/* Download Button */}
           <a 
             href={resume.resumeUrl}
             download
-            className="flex items-center gap-2 px-4 py-2 bg-white border-4 border-near-black rounded-full font-black uppercase text-xs shadow-[4px_4px_0_#11100D] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+            className="flex items-center gap-2 px-6 py-2 bg-white border-4 border-near-black rounded-full font-black uppercase text-xs shadow-[4px_4px_0_#11100D] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
           >
-            <Download size={14} /> <span className="hidden md:inline">Resume</span>
+            <Download size={14} /> Download Resume
           </a>
 
           {/* Contact Dropdown */}
@@ -52,7 +41,7 @@ const Header = () => {
               onClick={() => setIsContactOpen(!isContactOpen)}
               className="flex items-center gap-2 px-6 py-2 bg-accent-yellow border-4 border-near-black rounded-full font-black uppercase text-xs shadow-[4px_4px_0_#11100D] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
             >
-              Contact <ChevronDown size={14} className={`transition-transform ${isContactOpen ? 'rotate-180' : ''}`} />
+              Contact Me <ChevronDown size={14} className={`transition-transform ${isContactOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {isContactOpen && (

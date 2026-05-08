@@ -22,23 +22,7 @@ const Hero = () => {
             {resume.tagline}
           </p>
 
-          <div className="flex flex-wrap gap-4 mt-4 animate-in fade-in zoom-in duration-500 delay-700">
-            <a 
-              href={`mailto:${resume.email}`}
-              className="flex items-center gap-2 px-8 py-4 bg-accent-yellow border-4 border-near-black rounded-full font-black uppercase text-xl shadow-[6px_6px_0_#11100D] hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none transition-all"
-            >
-              Hire Me <ArrowRight size={24} />
-            </a>
-            <a 
-              href={resume.resumeUrl}
-              target="_blank"
-              className="flex items-center gap-2 px-8 py-4 bg-white border-4 border-near-black rounded-full font-black uppercase text-xl shadow-[6px_6px_0_#11100D] hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none transition-all"
-            >
-              Resume
-            </a>
-          </div>
-
-          <div className="flex flex-wrap gap-3 mt-8">
+          <div className="flex flex-wrap gap-3 mt-4 animate-in fade-in zoom-in duration-500 delay-700">
             <div className="flex items-center gap-2 px-4 py-2 bg-cream border-4 border-near-black rounded-full font-mono text-sm font-bold uppercase">
               <MapPin size={16} /> {resume.location}
             </div>

@@ -4,7 +4,7 @@ export const resume = {
   tagline: "Building production-grade ETL/ELT pipelines and big data infrastructure at scale.",
   location: "Austin, TX (Open to Relocation)",
   email: "tusharpanthri@gmail.com",
-  phone: "+1 (555) 000-0000", // Placeholder phone
+  phone: "+1 (555) 000-0000", 
   github: "https://github.com",
   linkedin: "https://linkedin.com",
   resumeUrl: "/resume.pdf",
@@ -129,6 +129,23 @@ export const resume = {
         "Exposed job health metrics via Prometheus scraping endpoints.",
         "Automated Slack notifications for pipeline failures."
       ]
+    }
+  ],
+
+  certifications: [
+    {
+      name: "AWS Certified Solutions Architect – Associate (SAA)",
+      issuer: "Amazon Web Services",
+      date: "2024",
+      logo: "https://api.dicebear.com/7.x/initials/svg?seed=AWS",
+      link: "#"
+    },
+    {
+      name: "Databricks Certified Data Engineer Associate",
+      issuer: "Databricks",
+      date: "2024",
+      logo: "https://api.dicebear.com/7.x/initials/svg?seed=DB",
+      link: "#"
     }
   ],
 
