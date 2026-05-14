@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: `${resume.name} | ${resume.role}`,
   description: resume.tagline,
   icons: {
-    icon: '/favicon.svg',
+    icon: 'favicon.svg',
   },
 };
 

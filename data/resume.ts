@@ -7,7 +7,7 @@ export const resume = {
   phone: "+1 (555) 000-0000", 
   github: "https://github.com",
   linkedin: "https://linkedin.com",
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "resume.pdf",
   profileImage: "https://api.dicebear.com/7.x/avataaars/svg?seed=Tushar", 
   summary: "Data Engineer with 3+ years of experience specializing in AWS (Glue, EMR, S3), Spark, and Snowflake. Proven track record of delivering governed, analysis-ready data products in Agile environments.",
   

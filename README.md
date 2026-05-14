@@ -1,17 +1,23 @@
 # Tushar Panthri - Data Engineer Portfolio
 
-This is my professional portfolio built with Next.js (App Router), TypeScript, and Tailwind CSS in a Neo-Brutalist style.
+Built with Next.js 15+, TypeScript, and Tailwind CSS 4.
 
-## 🚀 Deployment Status
+## 🚀 Live Site
+The site is hosted at: [https://tusharpanthri.github.io/](https://tusharpanthri.github.io/)
 
-This site is designed to be hosted on **GitHub Pages** using GitHub Actions.
+---
 
-### ⚠️ IMPORTANT: If you are seeing this README instead of the portfolio:
+### ⚠️ IF YOU SEE THE OLD README OR A 404:
 
-You must change your GitHub Repository settings:
-1. Go to **Settings** > **Pages**
-2. Under **Build and deployment** > **Source**, change the selection from "Deploy from a branch" to **GitHub Actions**.
-3. Once changed, push any small change to your `main` branch to trigger the first build.
+You MUST change one specific setting in your GitHub repository for the deployment to work:
+
+1.  Open your repo on **GitHub.com**.
+2.  Click **Settings** (at the top).
+3.  Click **Pages** (in the left sidebar).
+4.  Under **Build and deployment > Source**, change the dropdown to **GitHub Actions**.
+5.  **Push this change**: Now that I've updated the workflow to Node 22, push your changes.
+
+---
 
 ## 🛠️ Local Development
 
@@ -19,11 +25,11 @@ You must change your GitHub Repository settings:
 npm install
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) to view the project.
+Open [http://localhost:3000](http://localhost:3000) to view.
 
-## 📦 Build for Static Hosting
+## 📦 Static Build (GitHub Pages)
 
 ```bash
 npm run build
 ```
-The static files will be generated in the `out/` directory.
+Generates static HTML in the `out/` directory.
