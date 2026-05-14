@@ -1,42 +1,54 @@
 export const resume = {
   name: "Tushar Panthri",
-  role: "Data Engineer",
-  tagline: "Building production-grade ETL/ELT pipelines and big data infrastructure at scale.",
-  location: "Austin, TX (Open to Relocation)",
+  role: "Software Engineer",
+  tagline: "Building backend services, REST APIs, and distributed systems on AWS.",
+  location: "New York, NY",
   email: "tusharpanthri@gmail.com",
-  phone: "+1 (555) 000-0000", 
-  github: "https://github.com",
-  linkedin: "https://linkedin.com",
+  phone: "(934) 263-3282", 
+  github: "https://github.com/tusharpanthri",
+  linkedin: "https://www.linkedin.com/in/tushar-panthri-963ab814a/",
   resumeUrl: "resume.pdf",
-  profileImage: "https://api.dicebear.com/7.x/avataaars/svg?seed=Tushar", 
-  summary: "Data Engineer with 3+ years of experience specializing in AWS (Glue, EMR, S3), Spark, and Snowflake. Proven track record of delivering governed, analysis-ready data products in Agile environments.",
+  profileImage: "profile.jpg.jpg", 
+  summary: "Software Engineer with 3+ years building backend services, REST APIs, and distributed systems on AWS for financial clients. Hands-on with Python, Java, JavaScript, SQL, and full SDLC ownership including unit testing, CI/CD, code review, and on-call rotations.",
   
   skillGroups: [
     {
-      category: "Databases & Cloud",
+      category: "Languages & OOP",
       skills: [
-        { name: "AWS Glue", usedIn: "ETL pipelines at American Express" },
-        { name: "S3", usedIn: "Data lake storage for multiple projects" },
-        { name: "Snowflake", usedIn: "Data warehousing at Ameriprise Financial" },
-        { name: "Lambda", usedIn: "Serverless data processing triggers" }
+        { name: "Python", usedIn: "Backend services at American Express" },
+        { name: "Java", usedIn: "Distributed systems and backend logic" },
+        { name: "JavaScript/TypeScript", usedIn: "Full-stack development" },
+        { name: "SQL", usedIn: "Complex data transformations and querying" },
+        { name: "C++", usedIn: "Systems programming and algorithms" },
+        { name: "Data Structures", usedIn: "Efficient problem solving" }
       ]
     },
     {
-      category: "Big Data & ETL",
+      category: "Backend & APIs",
       skills: [
-        { name: "Spark", usedIn: "Distributed data processing at scale" },
-        { name: "Airflow", usedIn: "Workflow orchestration and scheduling" },
-        { name: "dbt", usedIn: "SQL transformation and modeling" },
-        { name: "Kafka", usedIn: "Real-time streaming ingestion" }
+        { name: "FastAPI", usedIn: "Building high-performance REST endpoints" },
+        { name: "Node.js/Express", usedIn: "BFF layers and backend services" },
+        { name: "REST/GraphQL", usedIn: "API design and implementation" },
+        { name: "Microservices", usedIn: "Distributed architecture design" },
+        { name: "Redis/Celery", usedIn: "Async job queues and caching" }
       ]
     },
     {
-      category: "DevOps & Tools",
+      category: "Frontend & Cloud",
       skills: [
-        { name: "Docker", usedIn: "Containerization of data services" },
-        { name: "Terraform", usedIn: "Infrastructure as Code on AWS" },
-        { name: "Python", usedIn: "Primary language for ETL and ML" },
-        { name: "SQL", usedIn: "Complex data transformations" }
+        { name: "React.js/Next.js", usedIn: "Modern web frontend development" },
+        { name: "AWS", usedIn: "Lambda, S3, EC2, CloudWatch, ECS" },
+        { name: "Docker/Kubernetes", usedIn: "Containerization and orchestration" },
+        { name: "Tailwind CSS", usedIn: "Utility-first responsive styling" }
+      ]
+    },
+    {
+      category: "Databases & DevOps",
+      skills: [
+        { name: "PostgreSQL/MySQL", usedIn: "Relational data modeling" },
+        { name: "MongoDB/DynamoDB", usedIn: "NoSQL document storage" },
+        { name: "CI/CD", usedIn: "GitHub Actions, Jenkins automation" },
+        { name: "Terraform", usedIn: "Infrastructure as Code" }
       ]
     }
   ],
@@ -44,46 +56,71 @@ export const resume = {
   experience: [
     {
       company: "American Express (via TCS)",
-      role: "Data Engineer",
+      role: "Software Engineer",
       period: "Oct 2023 — Aug 2024",
-      logo: "https://api.dicebear.com/7.x/initials/svg?seed=AX",
+      logo: "amex-logo.png",
       bullets: [
-        "Engineered production-grade ETL pipelines across 18 U.S. commercial market channels.",
-        "Improved data accuracy by 25% and reduced retrieval times using SparkSQL.",
-        "Automated quality validation processes to ensure data integrity across environments."
+        "Built backend services in Python with REST endpoints serving 18 U.S. commercial channels, achieving a 40% reduction in p95 latency.",
+        "Owned end-to-end SDLC for ETL microservices on AWS, including design, code review, and deployment with 100% success rate.",
+        "Collaborated in Agile sprints to ship BI dashboards backed by AWS Glue, contributing to design docs and on-call rotations."
       ]
     },
     {
       company: "Ameriprise Financial (via TCS)",
-      role: "Data Engineer",
+      role: "Software Engineer",
       period: "May 2022 — Oct 2023",
-      logo: "https://api.dicebear.com/7.x/initials/svg?seed=AF",
+      logo: "ameriprise-logo.png",
       bullets: [
-        "Reduced daily data loading time by 80% via parallel Spark processing.",
-        "Automated REST API integrations with Snowflake for the BlackRock Aladdin platform.",
-        "Reduced integration errors by 95% through robust error handling and monitoring."
+        "Designed distributed data pipelines on AWS using Python, Spark, and Lambda, reducing daily load times by 80%.",
+        "Engineered REST API integrations between BlackRock Aladdin and Snowflake with retry logic, reducing production errors by 95%.",
+        "Deployed observability stack with AWS Lambda and CloudWatch for automated monitoring and 100% pipeline consistency."
       ]
     },
     {
       company: "Ivavsys Technologies",
-      role: "Machine Learning Intern",
+      role: "Software Engineering Intern",
       period: "July 2021 — Apr 2022",
-      logo: "https://api.dicebear.com/7.x/initials/svg?seed=IT",
+      logo: "ivavsys-logo.png",
       bullets: [
-        "Built ARIMA-LSTM forecasting models to predict SLA breaches.",
-        "Preempted production bottlenecks during high-traffic events through predictive analysis.",
-        "Collaborated with dev teams to integrate ML models into existing monitoring dashboards."
+        "Developed Python forecasting services using ARIMA-LSTM models exposed via REST endpoints to predict SLA breaches.",
+        "Built operational dashboards integrated with backend APIs to preempt production bottlenecks during high-traffic events."
       ]
     }
   ],
 
   projects: [
     {
+      title: "PortfolioLens",
+      description: "Private Capital Analytics Platform for tracking portfolio metrics and IRR calculations.",
+      tech: ["React.js", "Node.js", "FastAPI", "PostgreSQL", "Docker"],
+      link: "https://github.com/tusharpanthri",
+      liveLink: "https://tusharpanthri.github.io/",
+      image: "https://api.dicebear.com/7.x/shapes/svg?seed=Lens",
+      details: [
+        "Full-stack analytics platform with React frontend and Node.js/FastAPI backend.",
+        "Designed normalized PostgreSQL schema for sub-100ms response times.",
+        "Implemented JWT auth with role-based access control."
+      ]
+    },
+    {
+      title: "LectureScribe",
+      description: "AI-Powered Transcription Service serving Whisper ML inference for multi-language audio.",
+      tech: ["Python", "FastAPI", "Celery", "Redis", "Whisper", "Docker"],
+      link: "https://github.com/tusharpanthri",
+      liveLink: "https://tusharpanthri.github.io/",
+      image: "https://api.dicebear.com/7.x/shapes/svg?seed=Scribe",
+      details: [
+        "Backend service transcribing 1-hour audio in under 5 minutes using Whisper.",
+        "Async job queue with Celery/Redis for tasks up to 2 hours.",
+        "Structured retry logic and webhook notifications for fault-tolerance."
+      ]
+    },
+    {
       title: "AlphaStream",
       description: "Real-time Financial Intelligence Platform ingesting live market data via Kafka and Spark on EMR.",
       tech: ["Kafka", "Spark", "AWS EMR", "dbt", "Grafana"],
-      link: "https://github.com",
-      liveLink: "https://example.com",
+      link: "https://github.com/tusharpanthri",
+      liveLink: "https://tusharpanthri.github.io/",
       image: "https://api.dicebear.com/7.x/shapes/svg?seed=Alpha",
       details: [
         "Ingested 1M+ messages per day using Kafka producers.",
@@ -95,8 +132,8 @@ export const resume = {
       title: "DistributedMind",
       description: "Large-scale data processing framework built to benchmark transformations and query optimization.",
       tech: ["Spark", "Dask", "Ray", "Docker", "S3"],
-      link: "https://github.com",
-      liveLink: "https://example.com",
+      link: "https://github.com/tusharpanthri",
+      liveLink: "https://tusharpanthri.github.io/",
       image: "https://api.dicebear.com/7.x/shapes/svg?seed=Mind",
       details: [
         "Optimized Parquet partitioning for faster query performance.",
@@ -108,8 +145,8 @@ export const resume = {
       title: "DataVault Explorer",
       description: "Interactive visualizer for Snowflake Data Vault 2.0 architectures with automated schema generation.",
       tech: ["React", "D3.js", "Snowflake", "Python"],
-      link: "https://github.com",
-      liveLink: "https://example.com",
+      link: "https://github.com/tusharpanthri",
+      liveLink: "https://tusharpanthri.github.io/",
       image: "https://api.dicebear.com/7.x/shapes/svg?seed=Vault",
       details: [
         "Generated DDL statements automatically from JSON schemas.",
@@ -121,8 +158,8 @@ export const resume = {
       title: "Sentinel ETL",
       description: "Lightweight, self-healing ETL framework for Python with built-in Slack alerting and Prometheus metrics.",
       tech: ["Python", "Prometheus", "Slack API", "PostgreSQL"],
-      link: "https://github.com",
-      liveLink: "https://example.com",
+      link: "https://github.com/tusharpanthri",
+      liveLink: "https://tusharpanthri.github.io/",
       image: "https://api.dicebear.com/7.x/shapes/svg?seed=Sentinel",
       details: [
         "Built custom decorators for automated retry and error logging.",
@@ -134,7 +171,7 @@ export const resume = {
 
   certifications: [
     {
-      name: "AWS Certified Solutions Architect – Associate (SAA)",
+      name: "AWS Certified Solutions Architect – Associate (SAA-C03)",
       issuer: "Amazon Web Services",
       date: "2024",
       logo: "https://api.dicebear.com/7.x/initials/svg?seed=AWS",
@@ -152,9 +189,9 @@ export const resume = {
   education: [
     {
       school: "Stony Brook University",
-      degree: "M.S. in Data Science",
+      degree: "M.S. in Computer Science and Applied Mathematics & Statistics",
       period: "2024 — 2026",
-      logo: "https://api.dicebear.com/7.x/initials/svg?seed=SBU",
+      logo: "sbu-logo.png",
       courses: [
         { name: "Big Data Systems", description: "Learned distributed computing architectures and MapReduce fundamentals." },
         { name: "Statistical Machine Learning", description: "Explored advanced regression and classification techniques." },
@@ -165,7 +202,7 @@ export const resume = {
       school: "GGSIPU Delhi",
       degree: "B.Tech in Electronics & Communication",
       period: "2017 — 2021",
-      logo: "https://api.dicebear.com/7.x/initials/svg?seed=GG",
+      logo: "ggsipu-logo.png",
       courses: [
         { name: "Digital Signal Processing", description: "Study of discrete-time signals and systems analysis." },
         { name: "Communication Systems", description: "Fundamentals of analog and digital communication protocols." }
