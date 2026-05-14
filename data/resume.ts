@@ -173,21 +173,18 @@ export const resume = {
     {
       name: "AWS Certified Solutions Architect – Associate (SAA-C03)",
       issuer: "Amazon Web Services",
-      date: "2024",
       logo: "aws-logo.png",
       link: "#"
     },
     {
       name: "AWS Certified Cloud Practitioner",
       issuer: "Amazon Web Services",
-      date: "2023",
       logo: "aws-logo.png",
       link: "#"
     },
     {
       name: "Databricks Certified Data Engineer Associate",
       issuer: "Databricks",
-      date: "2024",
       logo: "databricks-logo.png",
       link: "#"
     }

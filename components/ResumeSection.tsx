@@ -62,8 +62,8 @@ const ResumeSection: React.FC<ResumeSectionProps> = ({ title, items }) => {
                 >
                   <div className="flex gap-4 items-center">
                     {item.logo && (
-                      <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-near-black bg-accent-yellow flex-shrink-0 overflow-hidden group-hover/header:rotate-3 transition-transform">
-                        <img src={item.logo} alt="" className="w-full h-full object-cover" />
+                      <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-near-black bg-white flex-shrink-0 overflow-hidden group-hover/header:rotate-3 transition-transform flex items-center justify-center p-2">
+                        <img src={item.logo} alt="" className="w-full h-full object-contain" />
                       </div>
                     )}
                     <div>

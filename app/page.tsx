@@ -60,7 +60,7 @@ export default function Home() {
         items={resume.certifications.map(cert => ({
           company: cert.issuer,
           role: cert.name,
-          period: cert.date,
+          period: "",
           logo: cert.logo
         }))} 
       />
