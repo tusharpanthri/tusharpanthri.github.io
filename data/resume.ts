@@ -55,7 +55,7 @@ export const resume = {
 
   experience: [
     {
-      company: "American Express (via TCS)",
+      company: "American Express",
       role: "Software Engineer",
       period: "Oct 2023 — Aug 2024",
       logo: "amex-logo.png",
@@ -66,7 +66,7 @@ export const resume = {
       ]
     },
     {
-      company: "Ameriprise Financial (via TCS)",
+      company: "Ameriprise Financial",
       role: "Software Engineer",
       period: "May 2022 — Oct 2023",
       logo: "ameriprise-logo.png",
@@ -174,14 +174,21 @@ export const resume = {
       name: "AWS Certified Solutions Architect – Associate (SAA-C03)",
       issuer: "Amazon Web Services",
       date: "2024",
-      logo: "https://api.dicebear.com/7.x/initials/svg?seed=AWS",
+      logo: "aws-logo.png",
+      link: "#"
+    },
+    {
+      name: "AWS Certified Cloud Practitioner",
+      issuer: "Amazon Web Services",
+      date: "2023",
+      logo: "aws-logo.png",
       link: "#"
     },
     {
       name: "Databricks Certified Data Engineer Associate",
       issuer: "Databricks",
       date: "2024",
-      logo: "https://api.dicebear.com/7.x/initials/svg?seed=DB",
+      logo: "databricks-logo.png",
       link: "#"
     }
   ],
