@@ -61,7 +61,8 @@ export default function Home() {
           company: cert.issuer,
           role: cert.name,
           period: "",
-          logo: cert.logo
+          logo: cert.logo,
+          logoFit: "contain"
         }))} 
       />
 

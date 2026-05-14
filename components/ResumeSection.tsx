@@ -15,6 +15,7 @@ interface ResumeItem {
   description?: string;
   bullets?: string[];
   logo?: string;
+  logoFit?: 'cover' | 'contain';
   courses?: Course[];
 }
 
@@ -48,6 +49,7 @@ const ResumeSection: React.FC<ResumeSectionProps> = ({ title, items }) => {
         <div className="grid gap-8">
           {items.map((item, index) => {
             const isOpen = openIndices.includes(index);
+            const fitClass = item.logoFit === 'contain' ? 'object-contain p-2' : 'object-cover';
 
             return (
               <div 
@@ -62,8 +64,8 @@ const ResumeSection: React.FC<ResumeSectionProps> = ({ title, items }) => {
                 >
                   <div className="flex gap-4 items-center">
                     {item.logo && (
-                      <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-near-black bg-white flex-shrink-0 overflow-hidden group-hover/header:rotate-3 transition-transform flex items-center justify-center p-2">
-                        <img src={item.logo} alt="" className="w-full h-full object-contain" />
+                      <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-near-black bg-white flex-shrink-0 overflow-hidden group-hover/header:rotate-3 transition-transform flex items-center justify-center">
+                        <img src={item.logo} alt="" className={`w-full h-full ${fitClass}`} />
                       </div>
                     )}
                     <div>
