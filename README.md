@@ -1,23 +1,18 @@
 # Tushar Panthri - Data Engineer Portfolio
 
-Built with Next.js 15+, TypeScript, and Tailwind CSS 4.
+Built with **Next.js 15+**, **TypeScript**, and **Tailwind CSS 4**.
 
 ## 🚀 Live Site
 The site is hosted at: [https://tusharpanthri.github.io/](https://tusharpanthri.github.io/)
 
 ---
 
-### ⚠️ IF YOU SEE THE OLD README OR A 404:
+## 🛠️ GitHub Pages Deployment Fixes
+To ensure the Next.js static export works correctly on GitHub Pages, the following configurations were applied:
 
-You MUST change one specific setting in your GitHub repository for the deployment to work:
-
-1.  Open your repo on **GitHub.com**.
-2.  Click **Settings** (at the top).
-3.  Click **Pages** (in the left sidebar).
-4.  Under **Build and deployment > Source**, change the dropdown to **GitHub Actions**.
-5.  **Push this change**: Now that I've updated the workflow to Node 22, push your changes.
-
----
+1.  **Static Export Configuration**: Modified `next.config.ts` to use `output: 'export'` and `trailingSlash: true`.
+2.  **Path Resolution**: Switched absolute asset paths (e.g., `/favicon.svg`) to relative paths (e.g., `favicon.svg`) to prevent 404 errors during subpath or root deployment.
+3.  **Deployment Source**: Configured the repository to use **GitHub Actions** for deployment (**Settings > Pages > Build and deployment > Source**).
 
 ## 🛠️ Local Development
 
@@ -27,9 +22,9 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) to view.
 
-## 📦 Static Build (GitHub Pages)
+## 📦 Static Build
 
 ```bash
 npm run build
 ```
-Generates static HTML in the `out/` directory.
+Generates a static HTML export in the `out/` directory, optimized for GitHub Pages.
