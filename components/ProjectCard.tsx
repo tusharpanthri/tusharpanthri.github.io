@@ -17,8 +17,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, tech, lin
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div 
-      className="bg-white border-4 border-near-black flex flex-col shadow-[7px_7px_0_#11100D] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all group overflow-hidden relative"
+    <div
+      className="bg-white border-4 border-near-black flex flex-col shadow-[7px_7px_0_#11100D] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all group overflow-hidden relative before:content-[''] before:absolute before:top-0 before:right-0 before:z-10 before:w-[30px] before:h-[30px] before:bg-near-black before:[clip-path:polygon(100%_0,0_0,100%_100%)] after:content-[''] after:absolute after:top-1 after:right-1 after:z-10 after:w-[22px] after:h-[22px] after:bg-accent-yellow after:[clip-path:polygon(100%_0,0_0,100%_100%)]"
+      style={{ clipPath: 'polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 0 100%)' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => window.open(link, '_blank')}

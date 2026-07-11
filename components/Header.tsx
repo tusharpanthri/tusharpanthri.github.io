@@ -1,24 +1,54 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { resume } from '@/data/resume';
-import { Download, Mail, Phone, ChevronDown } from 'lucide-react';
+import { FileText, Mail, Phone, ChevronDown, SquareTerminal, Contrast } from 'lucide-react';
+import { useSiteState } from '@/lib/site-context';
+import { printResume } from '@/lib/print';
+
+const NAV_ITEMS = ['Experience', 'Projects', 'Education', 'Certifications'];
 
 const Header = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+  const { setTerminalOpen, inkMode, setInkMode } = useSiteState();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + 140;
+      let current = '';
+      for (const item of NAV_ITEMS) {
+        const el = document.getElementById(item.toLowerCase());
+        if (el && el.offsetTop <= scrollPos) {
+          current = item.toLowerCase();
+        }
+      }
+      setActiveSection(current);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handlePrint = () => {
+    printResume();
+  };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-cream/80 backdrop-blur-md border-b-4 border-near-black animate-in fade-in slide-in-from-top duration-500">
+    <header className="no-print fixed top-0 left-0 right-0 z-50 bg-cream/80 backdrop-blur-md border-b-4 border-near-black animate-in fade-in slide-in-from-top duration-500">
       <div className="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
         <a href="#" className="text-2xl font-black uppercase tracking-tighter hover:text-accent-red transition-colors">
           {resume.name.split(' ').map(n => n[0]).join('')}.
         </a>
 
         <nav className="hidden lg:flex items-center gap-8">
-          {['Experience', 'Projects', 'Education', 'Certifications'].map((item) => (
-            <a 
-              key={item} 
+          {NAV_ITEMS.map((item) => (
+            <a
+              key={item}
               href={`#${item.toLowerCase()}`}
-              className="text-sm font-black uppercase tracking-wider hover:text-accent-red transition-colors"
+              className={`text-sm font-black uppercase tracking-wider transition-colors ${
+                activeSection === item.toLowerCase() ? 'text-accent-red' : 'hover:text-accent-red'
+              }`}
             >
               {item}
             </a>
@@ -26,18 +56,39 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-3 md:gap-6">
-          {/* Download Button */}
-          <a 
-            href={resume.resumeUrl}
-            download
+          {/* Terminal Button */}
+          <button
+            onClick={() => setTerminalOpen(true)}
+            className="p-3 bg-white border-4 border-near-black rounded-full shadow-[4px_4px_0_#11100D] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+            title="Open terminal (press / )"
+            aria-label="Open terminal"
+          >
+            <SquareTerminal size={16} />
+          </button>
+
+          {/* Ink Mode Toggle */}
+          <button
+            onClick={() => setInkMode(!inkMode)}
+            className={`p-3 border-4 border-near-black rounded-full shadow-[4px_4px_0_#11100D] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all ${
+              inkMode ? 'bg-near-black text-cream' : 'bg-white'
+            }`}
+            title="Toggle ink mode"
+            aria-label="Toggle ink mode"
+          >
+            <Contrast size={16} />
+          </button>
+
+          {/* Resume / Print Button */}
+          <button
+            onClick={handlePrint}
             className="flex items-center gap-2 px-6 py-2 bg-white border-4 border-near-black rounded-full font-black uppercase text-xs shadow-[4px_4px_0_#11100D] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
           >
-            <Download size={14} /> Download Resume
-          </a>
+            <FileText size={14} /> Resume
+          </button>
 
           {/* Contact Dropdown */}
           <div className="relative">
-            <button 
+            <button
               onClick={() => setIsContactOpen(!isContactOpen)}
               className="flex items-center gap-2 px-6 py-2 bg-accent-yellow border-4 border-near-black rounded-full font-black uppercase text-xs shadow-[4px_4px_0_#11100D] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
             >

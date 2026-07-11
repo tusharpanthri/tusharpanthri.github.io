@@ -22,9 +22,10 @@ interface ResumeItem {
 interface ResumeSectionProps {
   title: string;
   items: ResumeItem[];
+  index?: number;
 }
 
-const ResumeSection: React.FC<ResumeSectionProps> = ({ title, items }) => {
+const ResumeSection: React.FC<ResumeSectionProps> = ({ title, items, index }) => {
   const [openIndices, setOpenIndices] = useState<number[]>([]);
   const timeoutRefs = useRef<{ [key: number]: NodeJS.Timeout }>({});
 
@@ -45,6 +46,11 @@ const ResumeSection: React.FC<ResumeSectionProps> = ({ title, items }) => {
   return (
     <section className="py-16 border-t-4 border-near-black" id={title.toLowerCase()}>
       <div className="max-w-7xl mx-auto px-6 md:px-10">
+        {typeof index === 'number' && (
+          <p className="font-mono text-accent-red font-black uppercase tracking-widest mb-2">
+            {String(index).padStart(2, '0')} /
+          </p>
+        )}
         <h2 className="text-4xl md:text-6xl font-black uppercase mb-12 tracking-tighter">{title}</h2>
         <div className="grid gap-8">
           {items.map((item, index) => {

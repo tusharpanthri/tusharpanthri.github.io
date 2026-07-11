@@ -8,9 +8,22 @@ export const resume = {
   github: "https://github.com/tusharpanthri",
   linkedin: "https://www.linkedin.com/in/tushar-panthri-963ab814a/",
   resumeUrl: "resume.pdf",
-  profileImage: "profile.jpg.jpg", 
+  profileImage: "profile.jpg.jpg",
   summary: "Software Engineer with 3+ years building backend services, REST APIs, and distributed systems on AWS for financial clients. Hands-on with Python, Java, JavaScript, SQL, and full SDLC ownership including unit testing, CI/CD, code review, and on-call rotations.",
-  
+  githubUsername: "tusharpanthri",
+  tickerItems: [
+    "PYTHON",
+    "AWS",
+    "REST APIS",
+    "FASTAPI",
+    "REACT.JS",
+    "DISTRIBUTED SYSTEMS",
+    "DOCKER",
+    "POSTGRESQL",
+    "KAFKA",
+    "TERRAFORM"
+  ],
+
   skillGroups: [
     {
       category: "Languages & OOP",

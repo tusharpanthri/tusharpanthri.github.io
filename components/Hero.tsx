@@ -1,9 +1,17 @@
-import React from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
 import { Mail, MapPin, ArrowRight } from 'lucide-react';
 import { Github, Linkedin } from '@/components/Icons';
 import { resume } from '@/data/resume';
+import { getDailyQuote } from '@/lib/quotes';
 
 const Hero = () => {
+  const [quote, setQuote] = useState('');
+
+  useEffect(() => {
+    setQuote(getDailyQuote());
+  }, []);
+
   return (
     <section className="pt-32 pb-20 max-w-7xl mx-auto px-6 md:px-10">
       <div className="flex flex-col lg:flex-row gap-12 items-start lg:items-center">
@@ -33,7 +41,7 @@ const Hero = () => {
             >
               <Github size={16} /> GitHub
             </a>
-            <a 
+            <a
               href={resume.linkedin}
               target="_blank"
               className="flex items-center gap-2 px-4 py-2 bg-white border-4 border-near-black rounded-full font-mono text-sm font-bold uppercase hover:bg-accent-yellow transition-colors"
@@ -41,6 +49,12 @@ const Hero = () => {
               <Linkedin size={16} /> LinkedIn
             </a>
           </div>
+
+          {quote && (
+            <p className="max-w-xl pt-4 mt-2 border-t-2 border-near-black/20 italic text-muted text-sm md:text-base font-medium animate-in fade-in duration-1000">
+              &ldquo;{quote}&rdquo;
+            </p>
+          )}
         </div>
 
         {/* Profile Photo */}
