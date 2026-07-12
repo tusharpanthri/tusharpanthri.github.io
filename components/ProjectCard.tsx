@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { ExternalLink, ArrowRight } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { Github } from '@/components/Icons';
 
 interface ProjectCardProps {

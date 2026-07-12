@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { Mail, MapPin, ArrowRight } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { Github, Linkedin } from '@/components/Icons';
 import { resume } from '@/data/resume';
 import { getQuoteOfDay } from '@/lib/quotes';

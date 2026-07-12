@@ -8,7 +8,7 @@ import Ticker from '@/components/Ticker';
 import GitHubStats from '@/components/GitHubStats';
 import NYClock from '@/components/NYClock';
 import { resume } from '@/data/resume';
-import { Mail, ExternalLink } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { Github, Linkedin } from '@/components/Icons';
 
 export default function Home() {
@@ -79,7 +79,7 @@ export default function Home() {
       {/* Contact Section */}
       <section className="py-24 border-t-4 border-near-black dark:border-[var(--dm-border)] bg-accent-yellow" id="contact">
         <div className="max-w-7xl mx-auto px-6 md:px-10 text-center">
-          <h2 className="text-5xl md:text-8xl font-black uppercase mb-8 tracking-tighter">Let's Build Something</h2>
+          <h2 className="text-5xl md:text-8xl font-black uppercase mb-8 tracking-tighter">Let&apos;s Build Something</h2>
           <p className="text-xl md:text-2xl font-bold mb-8 max-w-2xl mx-auto uppercase">
             Currently looking for new opportunities and interesting projects to collaborate on.
           </p>

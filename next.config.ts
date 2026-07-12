@@ -1,8 +1,5 @@
 import type { NextConfig } from "next";
 
-const isProd = process.env.NODE_VERSION !== undefined; // Simple check for CI environment
-const repoName = 'tusharpanthri.github.io';
-
 const nextConfig: NextConfig = {
   output: 'export',
   // Use the repository name as the base path for GitHub Pages

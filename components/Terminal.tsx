@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { resume } from '@/data/resume';
 import { useSiteState } from '@/lib/site-context';
-import { printResume } from '@/lib/print';
+import { downloadResume } from '@/lib/resume';
 
 interface Line {
   type: 'input' | 'output';
@@ -20,7 +20,7 @@ const HELP_LINES = [
   '  projects    List projects',
   '  experience  List work experience',
   '  socials     Links to GitHub / LinkedIn / email',
-  '  resume      Open the print dialog',
+  '  resume      Download resume PDF',
   '  clear       Clear the terminal'
 ];
 
@@ -57,7 +57,7 @@ function runCommand(raw: string): string[] {
         `email     ${resume.email}`
       ];
     case 'resume':
-      return ['Opening print dialog...'];
+      return ['Downloading resume...'];
     default:
       return [`command not found: ${cmd}. type 'help' for a list of commands.`];
   }
@@ -119,7 +119,7 @@ const Terminal = () => {
       const output = runCommand(cmd);
       setHistory((h) => [...h, ...output.map((text): Line => ({ type: 'output', text }))]);
       if (trimmed === 'resume') {
-        printResume();
+        downloadResume();
       }
     }
     setInput('');
