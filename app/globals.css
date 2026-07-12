@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Key the `dark:` variant off our own [data-theme] attribute instead of OS-level prefers-color-scheme */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   --color-cream: #EEE9D8;
   --color-near-black: #11100D;
@@ -12,6 +15,28 @@
   --background: #EEE9D8;
   --foreground: #11100D;
   --dot-color: rgba(17, 16, 13, 0.5);
+
+  /* Dark-mode surface tokens (unused in light mode) */
+  --dm-surface: #151a35;
+  --dm-border: #333333;
+  --dm-text: #e0e0e0;
+  --dm-muted: #a39c8e;
+  --dm-shadow: #333333;
+}
+
+html[data-theme="dark"] {
+  --background: #0a0e27 !important;
+  --foreground: #e0e0e0 !important;
+  --dot-color: #e0e0e0 !important;
+}
+
+/* Fallback to OS preference before JS runs / if JS is unavailable, unless the user explicitly chose light */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]):not([data-theme="dark"]) {
+    --background: #0a0e27;
+    --foreground: #e0e0e0;
+    --dot-color: #e0e0e0;
+  }
 }
 
 body {
@@ -21,16 +46,15 @@ body {
   background-size: 30px 30px;
   background-attachment: fixed;
   font-family: var(--font-geist-sans), sans-serif;
-  transition: background-color 0.6s;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/* Ink mode */
-.ink-mode {
-  filter: invert(1) hue-rotate(180deg);
+.grain-overlay {
+  opacity: 0.05;
 }
 
-.ink-mode img {
-  filter: invert(1) hue-rotate(180deg);
+html[data-theme="dark"] .grain-overlay {
+  opacity: 0.08;
 }
 
 @layer utilities {
@@ -127,12 +151,12 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #EEE9D8;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #11100D;
-  border: 3px solid #EEE9D8;
+  background: var(--foreground);
+  border: 3px solid var(--background);
 }
 
 ::-webkit-scrollbar-thumb:hover {

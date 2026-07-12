@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from 'react';
 import Terminal from './Terminal';
-import { SiteStateProvider, useSiteState } from '@/lib/site-context';
+import { SiteStateProvider } from '@/lib/site-context';
 
 type TimeBucket = 'morning' | 'day' | 'evening' | 'night';
 
@@ -23,10 +23,9 @@ const GRAIN_SVG =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E";
 
 function PageInner({ children }: { children: React.ReactNode }) {
-  const { inkMode } = useSiteState();
-
   useEffect(() => {
     const applyTint = () => {
+      if (document.documentElement.getAttribute('data-theme') === 'dark') return;
       const bucket = getTimeBucket(new Date().getHours());
       const { background, dot } = BUCKET_STYLES[bucket];
       document.documentElement.style.setProperty('--background', background);
@@ -39,13 +38,12 @@ function PageInner({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <div className={inkMode ? 'ink-mode' : undefined}>{children}</div>
+      {children}
 
       <div
-        className="no-print fixed inset-0 pointer-events-none"
+        className="no-print grain-overlay fixed inset-0 pointer-events-none"
         style={{
           zIndex: 200,
-          opacity: 0.05,
           mixBlendMode: 'multiply',
           backgroundImage: `url("${GRAIN_SVG}")`
         }}

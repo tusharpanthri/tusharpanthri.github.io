@@ -44,7 +44,7 @@ const ResumeSection: React.FC<ResumeSectionProps> = ({ title, items, index }) =>
   };
 
   return (
-    <section className="py-16 border-t-4 border-near-black" id={title.toLowerCase()}>
+    <section className="py-16 border-t-4 border-near-black dark:border-[var(--dm-border)]" id={title.toLowerCase()}>
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         {typeof index === 'number' && (
           <p className="font-mono text-accent-red font-black uppercase tracking-widest mb-2">
@@ -58,19 +58,19 @@ const ResumeSection: React.FC<ResumeSectionProps> = ({ title, items, index }) =>
             const fitClass = item.logoFit === 'contain' ? 'object-contain p-2' : 'object-cover';
 
             return (
-              <div 
-                key={index} 
-                className="bg-white border-4 border-near-black p-6 md:p-8 shadow-[7px_7px_0_#11100D] transition-all relative"
+              <div
+                key={index}
+                className="bg-white dark:bg-[var(--dm-surface)] border-4 border-near-black dark:border-[var(--dm-border)] p-6 md:p-8 shadow-[7px_7px_0_#11100D] dark:shadow-[7px_7px_0_var(--dm-shadow)] transition-all relative"
                 onMouseLeave={() => handleMouseLeave(index)}
                 onMouseEnter={() => handleMouseEnter(index)}
               >
                 {/* Trigger Area - Increased proximity area */}
-                <div 
+                <div
                   className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 cursor-help group/header pb-4"
                 >
                   <div className="flex gap-4 items-center">
                     {item.logo && (
-                      <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-near-black bg-white flex-shrink-0 overflow-hidden group-hover/header:rotate-3 transition-transform flex items-center justify-center">
+                      <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-near-black dark:border-[var(--dm-border)] bg-white flex-shrink-0 overflow-hidden group-hover/header:rotate-3 transition-transform flex items-center justify-center">
                         <img src={item.logo} alt="" className={`w-full h-full ${fitClass}`} />
                       </div>
                     )}
@@ -78,31 +78,31 @@ const ResumeSection: React.FC<ResumeSectionProps> = ({ title, items, index }) =>
                       <h3 className="text-2xl font-black uppercase tracking-tight group-hover/header:text-accent-red transition-colors">
                         {item.company || item.school}
                       </h3>
-                      <p className="text-xl font-bold text-accent-red group-hover/header:text-near-black transition-colors">
+                      <p className="text-xl font-bold text-accent-red group-hover/header:text-near-black dark:group-hover/header:text-[var(--dm-text)] transition-colors">
                         {item.role || item.degree}
                       </p>
                     </div>
                   </div>
-                  <div className="px-4 py-1 bg-accent-yellow border-4 border-near-black rounded-full text-sm font-mono font-bold w-fit">
+                  <div className="px-4 py-1 bg-accent-yellow text-near-black border-4 border-near-black dark:border-[var(--dm-border)] rounded-full text-sm font-mono font-bold w-fit">
                     {item.period}
                   </div>
                 </div>
-                
+
                 {item.description && (
-                  <p className="text-muted font-medium leading-relaxed max-w-3xl">
+                  <p className="text-muted dark:text-[var(--dm-muted)] font-medium leading-relaxed max-w-3xl">
                     {item.description}
                   </p>
                 )}
 
                 {/* Content Area - Expandable */}
-                <div 
+                <div
                   className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[1000px] opacity-100 mt-6' : 'max-h-0 opacity-0'}`}
                 >
                   {/* Bullets (Experience/General) */}
                   {item.bullets && (
                     <ul className="grid gap-2">
                       {item.bullets.map((bullet, i) => (
-                        <li key={i} className="flex gap-3 text-muted font-medium leading-relaxed">
+                        <li key={i} className="flex gap-3 text-muted dark:text-[var(--dm-muted)] font-medium leading-relaxed">
                           <span className="text-accent-red font-black mt-1">/</span>
                           {bullet}
                         </li>
@@ -112,13 +112,13 @@ const ResumeSection: React.FC<ResumeSectionProps> = ({ title, items, index }) =>
 
                   {/* Courses (Education) */}
                   {item.courses && (
-                    <div className="border-t-4 border-near-black pt-6">
+                    <div className="border-t-4 border-near-black dark:border-[var(--dm-border)] pt-6">
                       <h4 className="font-black uppercase text-sm mb-4">Key Courses & Insights</h4>
                       <div className="grid md:grid-cols-2 gap-4">
                         {item.courses.map((course, i) => (
-                          <div key={i} className="bg-cream border-4 border-near-black p-4 shadow-[4px_4px_0_#11100D]">
+                          <div key={i} className="bg-cream dark:bg-[#0a0e27] border-4 border-near-black dark:border-[var(--dm-border)] p-4 shadow-[4px_4px_0_#11100D] dark:shadow-[4px_4px_0_var(--dm-shadow)]">
                             <h5 className="font-black uppercase text-sm mb-1">{course.name}</h5>
-                            <p className="text-xs font-bold text-muted uppercase tracking-tight">{course.description}</p>
+                            <p className="text-xs font-bold text-muted dark:text-[var(--dm-muted)] uppercase tracking-tight">{course.description}</p>
                           </div>
                         ))}
                       </div>

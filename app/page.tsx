@@ -26,7 +26,7 @@ export default function Home() {
       <ResumeSection title="Experience" items={resume.experience} index={1} />
 
       {/* Projects Section */}
-      <section className="py-16 border-t-4 border-near-black" id="projects">
+      <section className="py-16 border-t-4 border-near-black dark:border-[var(--dm-border)]" id="projects">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <p className="font-mono text-accent-red font-black uppercase tracking-widest mb-2">02 /</p>
           <h2 className="text-4xl md:text-6xl font-black uppercase mb-12 tracking-tighter">Selected Projects</h2>
@@ -39,14 +39,14 @@ export default function Home() {
       </section>
 
       {/* Skills Section */}
-      <section className="py-16 border-t-4 border-near-black bg-white" id="skills">
+      <section className="py-16 border-t-4 border-near-black dark:border-[var(--dm-border)] bg-white dark:bg-[var(--dm-surface)]" id="skills">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <p className="font-mono text-accent-red font-black uppercase tracking-widest mb-2">03 /</p>
           <h2 className="text-4xl md:text-6xl font-black uppercase mb-12 tracking-tighter">Skills & Expertise</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
             {resume.skillGroups.map((group) => (
               <div key={group.category} className="space-y-6">
-                <h3 className="text-2xl font-black uppercase border-b-4 border-near-black pb-2 inline-block">
+                <h3 className="text-2xl font-black uppercase border-b-4 border-near-black dark:border-[var(--dm-border)] pb-2 inline-block">
                   {group.category}
                 </h3>
                 <div className="flex flex-wrap gap-4">
@@ -77,7 +77,7 @@ export default function Home() {
       />
 
       {/* Contact Section */}
-      <section className="py-24 border-t-4 border-near-black bg-accent-yellow" id="contact">
+      <section className="py-24 border-t-4 border-near-black dark:border-[var(--dm-border)] bg-accent-yellow" id="contact">
         <div className="max-w-7xl mx-auto px-6 md:px-10 text-center">
           <h2 className="text-5xl md:text-8xl font-black uppercase mb-8 tracking-tighter">Let's Build Something</h2>
           <p className="text-xl md:text-2xl font-bold mb-8 max-w-2xl mx-auto uppercase">
@@ -115,7 +115,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="py-12 border-t-4 border-near-black bg-cream text-center font-mono font-bold uppercase tracking-widest px-6 text-near-black">
+      <footer className="py-12 border-t-4 border-near-black dark:border-[var(--dm-border)] bg-cream dark:bg-[var(--dm-surface)] text-center font-mono font-bold uppercase tracking-widest px-6 text-near-black dark:text-[var(--dm-text)]">
         &copy; {new Date().getFullYear()} {resume.name} <DynamicGreeting />
         <div className="no-print text-[10px] font-bold opacity-40 tracking-widest mt-3 normal-case">
           Press / for the terminal
