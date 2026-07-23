@@ -4,6 +4,8 @@ import Script from "next/script";
 import "./globals.css";
 import { resume } from "@/data/resume";
 import PageWrapper from "@/components/PageWrapper";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +38,13 @@ export default function RootLayout({
         <Script id="theme-init" strategy="beforeInteractive">
           {`(function(){try{var s=localStorage.getItem('theme-preference');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',d?'dark':'light');}catch(e){}})();`}
         </Script>
-        <PageWrapper>{children}</PageWrapper>
+        <PageWrapper>
+          <Header />
+          <main className="min-h-screen selection:bg-accent-yellow">
+            {children}
+          </main>
+          <Footer />
+        </PageWrapper>
       </body>
     </html>
   );

@@ -103,12 +103,14 @@ export const resume = {
 
   projects: [
     {
+      slug: "portfolio-lens",
       title: "PortfolioLens",
+      status: "live" as const,
+      featured: true,
       description: "Private Capital Analytics Platform for tracking portfolio metrics and IRR calculations.",
       tech: ["React.js", "Node.js", "FastAPI", "PostgreSQL", "Docker"],
-      link: "https://github.com/tusharpanthri",
-      liveLink: "https://tusharpanthri.github.io/",
-      image: "https://api.dicebear.com/7.x/shapes/svg?seed=Lens",
+      repoUrl: null,
+      liveUrl: null,
       details: [
         "Full-stack analytics platform with React frontend and Node.js/FastAPI backend.",
         "Designed normalized PostgreSQL schema for sub-100ms response times.",
@@ -116,12 +118,14 @@ export const resume = {
       ]
     },
     {
+      slug: "lecture-scribe",
       title: "LectureScribe",
+      status: "live" as const,
+      featured: true,
       description: "AI-Powered Transcription Service serving Whisper ML inference for multi-language audio.",
       tech: ["Python", "FastAPI", "Celery", "Redis", "Whisper", "Docker"],
-      link: "https://github.com/tusharpanthri",
-      liveLink: "https://tusharpanthri.github.io/",
-      image: "https://api.dicebear.com/7.x/shapes/svg?seed=Scribe",
+      repoUrl: null,
+      liveUrl: null,
       details: [
         "Backend service transcribing 1-hour audio in under 5 minutes using Whisper.",
         "Async job queue with Celery/Redis for tasks up to 2 hours.",
@@ -129,12 +133,14 @@ export const resume = {
       ]
     },
     {
-      title: "AlphaStream",
+      slug: "nexus-ai",
+      title: "Nexus AI",
+      status: "live" as const,
+      featured: true,
       description: "Real-time Financial Intelligence Platform ingesting live market data via Kafka and Spark on EMR.",
       tech: ["Kafka", "Spark", "AWS EMR", "dbt", "Grafana"],
-      link: "https://github.com/tusharpanthri",
-      liveLink: "https://tusharpanthri.github.io/",
-      image: "https://api.dicebear.com/7.x/shapes/svg?seed=Alpha",
+      repoUrl: null,
+      liveUrl: null,
       details: [
         "Ingested 1M+ messages per day using Kafka producers.",
         "Implemented windowed transformations in Spark Streaming.",
@@ -142,12 +148,14 @@ export const resume = {
       ]
     },
     {
+      slug: "distributed-mind",
       title: "DistributedMind",
+      status: "live" as const,
+      featured: false,
       description: "Large-scale data processing framework built to benchmark transformations and query optimization.",
       tech: ["Spark", "Dask", "Ray", "Docker", "S3"],
-      link: "https://github.com/tusharpanthri",
-      liveLink: "https://tusharpanthri.github.io/",
-      image: "https://api.dicebear.com/7.x/shapes/svg?seed=Mind",
+      repoUrl: null,
+      liveUrl: null,
       details: [
         "Optimized Parquet partitioning for faster query performance.",
         "Benchmarked Dask vs Spark for specific compute workloads.",
@@ -155,12 +163,14 @@ export const resume = {
       ]
     },
     {
+      slug: "datavault-explorer",
       title: "DataVault Explorer",
+      status: "live" as const,
+      featured: false,
       description: "Interactive visualizer for Snowflake Data Vault 2.0 architectures with automated schema generation.",
       tech: ["React", "D3.js", "Snowflake", "Python"],
-      link: "https://github.com/tusharpanthri",
-      liveLink: "https://tusharpanthri.github.io/",
-      image: "https://api.dicebear.com/7.x/shapes/svg?seed=Vault",
+      repoUrl: null,
+      liveUrl: null,
       details: [
         "Generated DDL statements automatically from JSON schemas.",
         "Visualized Hub, Sat, and Link relationships using D3 force graphs.",
@@ -168,12 +178,14 @@ export const resume = {
       ]
     },
     {
+      slug: "sentinel-etl",
       title: "Sentinel ETL",
+      status: "live" as const,
+      featured: false,
       description: "Lightweight, self-healing ETL framework for Python with built-in Slack alerting and Prometheus metrics.",
       tech: ["Python", "Prometheus", "Slack API", "PostgreSQL"],
-      link: "https://github.com/tusharpanthri",
-      liveLink: "https://tusharpanthri.github.io/",
-      image: "https://api.dicebear.com/7.x/shapes/svg?seed=Sentinel",
+      repoUrl: null,
+      liveUrl: null,
       details: [
         "Built custom decorators for automated retry and error logging.",
         "Exposed job health metrics via Prometheus scraping endpoints.",
@@ -181,6 +193,14 @@ export const resume = {
       ]
     }
   ],
+
+  posts: [] as Array<{
+    title: string;
+    date: string;
+    excerpt: string;
+    tag: string;
+    url: string;
+  }>,
 
   certifications: [
     {
