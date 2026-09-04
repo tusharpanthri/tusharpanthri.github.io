@@ -14,7 +14,7 @@
 :root {
   --background: #EEE9D8;
   --foreground: #11100D;
-  --dot-color: rgba(17, 16, 13, 0.5);
+  --dot-color: rgba(17, 16, 13, 0.16);
 
   /* Dark-mode surface tokens (unused in light mode) */
   --dm-surface: #151a35;
@@ -27,7 +27,7 @@
 html[data-theme="dark"] {
   --background: #0a0e27 !important;
   --foreground: #e0e0e0 !important;
-  --dot-color: #e0e0e0 !important;
+  --dot-color: rgba(224, 224, 224, 0.14) !important;
 }
 
 /* Fallback to OS preference before JS runs / if JS is unavailable, unless the user explicitly chose light */
@@ -35,15 +35,15 @@ html[data-theme="dark"] {
   html:not([data-theme="light"]):not([data-theme="dark"]) {
     --background: #0a0e27;
     --foreground: #e0e0e0;
-    --dot-color: #e0e0e0;
+    --dot-color: rgba(224, 224, 224, 0.14);
   }
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  background-image: radial-gradient(var(--dot-color) 0.5px, transparent 0.5px);
-  background-size: 30px 30px;
+  background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+  background-size: 28px 28px;
   background-attachment: fixed;
   font-family: var(--font-geist-sans), sans-serif;
   transition: background-color 0.3s, color 0.3s;

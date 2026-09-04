@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ExternalLink, ArrowLeft } from 'lucide-react';
 import { Github } from '@/components/Icons';
+import ContactCTA from '@/components/ContactCTA';
 import { resume } from '@/data/resume';
 
 export const dynamicParams = false;
@@ -48,6 +49,7 @@ export default async function ProjectDetailPage({
   }
 
   return (
+    <>
     <section className="pt-32 pb-16">
       <div className="max-w-4xl mx-auto px-6 md:px-10">
         <Link
@@ -113,5 +115,8 @@ export default async function ProjectDetailPage({
         )}
       </div>
     </section>
+
+    <ContactCTA />
+    </>
   );
 }

@@ -7,7 +7,6 @@ import { Download, Mail, Phone, ChevronDown, SquareTerminal, Moon, Sun } from 'l
 import { useSiteState } from '@/lib/site-context';
 
 const NAV_ITEMS = [
-  { label: 'About', href: '/about/' },
   { label: 'Projects', href: '/projects/' },
   { label: 'Blog', href: '/blog/' },
   { label: 'Contact', href: '/contact/' },
@@ -38,9 +37,9 @@ const Header = () => {
   return (
     <header className="no-print fixed top-0 left-0 right-0 z-50 bg-cream/80 dark:bg-[#0a0e27]/90 backdrop-blur-md border-b-4 border-near-black dark:border-[var(--dm-border)] transition-colors duration-300 animate-in fade-in slide-in-from-top duration-500">
       <div className="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-black uppercase tracking-tighter hover:text-accent-red transition-colors">
+        <span className="text-2xl font-black uppercase tracking-tighter">
           {resume.name.split(' ').map(n => n[0]).join('')}.
-        </Link>
+        </span>
 
         <nav className="hidden lg:flex items-center gap-8">
           {NAV_ITEMS.map((item) => {
