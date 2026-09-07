@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-// 1. Create a form at https://formspree.io and paste its id here.
-const FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+const FORM_ENDPOINT = 'https://formspree.io/f/mbgjzjde';
 
 const INK = '#11100D';
 const PAPER = '#EEE9D8';
