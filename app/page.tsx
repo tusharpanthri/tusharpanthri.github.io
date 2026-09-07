@@ -5,6 +5,7 @@ import ProjectCard from '@/components/ProjectCard';
 import Ticker from '@/components/Ticker';
 import GitHubStats from '@/components/GitHubStats';
 import NYClock from '@/components/NYClock';
+import ContactCTA from '@/components/ContactCTA';
 import { resume } from '@/data/resume';
 import { Mail, ArrowRight } from 'lucide-react';
 import { Github, Linkedin } from '@/components/Icons';
@@ -100,12 +101,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-6">
-            <a
-              href={`mailto:${resume.email}`}
-              className="flex items-center gap-3 px-10 py-5 bg-near-black text-white rounded-full font-black uppercase text-xl shadow-[8px_8px_0_#FF4B2B] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all"
-            >
-              <Mail size={24} /> Email Me
-            </a>
+            <ContactCTA />
             <div className="flex gap-4">
               <a
                 href={resume.github}
@@ -126,12 +122,21 @@ export default function Home() {
             </div>
           </div>
 
-          <Link
-            href="/contact/"
-            className="inline-flex items-center gap-2 mt-10 font-black uppercase text-sm tracking-wider underline hover:text-near-black/70 transition-colors"
+          <a
+            href={`mailto:${resume.email}`}
+            className="inline-flex items-center gap-2 mt-10 font-mono text-sm font-bold tracking-wider underline hover:text-near-black/70 transition-colors"
           >
-            More ways to reach me <ArrowRight size={16} />
-          </Link>
+            <Mail size={16} /> Or email me directly
+          </a>
+
+          <div>
+            <Link
+              href="/contact/"
+              className="inline-flex items-center gap-2 mt-4 font-black uppercase text-sm tracking-wider underline hover:text-near-black/70 transition-colors"
+            >
+              More ways to reach me <ArrowRight size={16} />
+            </Link>
+          </div>
         </div>
       </section>
     </>

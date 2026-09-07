@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ExternalLink } from 'lucide-react';
+import ContactCTA from '@/components/ContactCTA';
 import { resume } from '@/data/resume';
 
 export const metadata: Metadata = {
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
+    <>
     <section className="pt-32 pb-16">
       <div className="max-w-4xl mx-auto px-6 md:px-10">
         <p className="font-mono text-accent-red font-black uppercase tracking-widest mb-2">01 /</p>
@@ -49,5 +51,8 @@ export default function BlogPage() {
         )}
       </div>
     </section>
+
+    <ContactCTA />
+    </>
   );
 }
