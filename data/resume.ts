@@ -8,9 +8,20 @@ export const resume = {
   github: "https://github.com/tusharpanthri",
   linkedin: "https://www.linkedin.com/in/tushar-panthri-963ab814a/",
   resumeUrl: "resume.pdf",
-  profileImage: "profile.jpg.jpg",
+  profileImage: "profile.jpg",
   summary: "Software Engineer with 3+ years building backend services, REST APIs, and distributed systems on AWS for financial clients. Hands-on with Python, Java, JavaScript, SQL, and full SDLC ownership including unit testing, CI/CD, code review, and on-call rotations.",
+  proof: [
+    { value: "−40%", label: "p95 latency on REST services serving 18 U.S. commercial channels at Amex" },
+    { value: "−80%", label: "daily load time on AWS pipelines built with Python, Spark and Lambda" },
+    { value: "−95%", label: "production errors after rebuilding Aladdin ↔ Snowflake integrations with retries" }
+  ],
   githubUsername: "tusharpanthri",
+  stack: [
+    "Python", "Java", "TypeScript", "SQL", "FastAPI", "Node.js / Express",
+    "REST & GraphQL", "Kafka", "Spark", "AWS (Lambda, S3, ECS, Glue)",
+    "Docker / Kubernetes", "Terraform", "PostgreSQL", "DynamoDB",
+    "Redis / Celery", "React / Next.js"
+  ],
   tickerItems: [
     "PYTHON",
     "AWS",
@@ -72,6 +83,7 @@ export const resume = {
       role: "Software Engineer",
       period: "Oct 2023 — Aug 2024",
       logo: "amex-logo.png",
+      impact: "Python backend services and REST endpoints for 18 U.S. commercial channels; owned SDLC for ETL microservices on AWS end to end, from design docs to on-call.",
       bullets: [
         "Built backend services in Python with REST endpoints serving 18 U.S. commercial channels, achieving a 40% reduction in p95 latency.",
         "Owned end-to-end SDLC for ETL microservices on AWS, including design, code review, and deployment with 100% success rate.",
@@ -83,6 +95,7 @@ export const resume = {
       role: "Software Engineer",
       period: "May 2022 — Oct 2023",
       logo: "ameriprise-logo.png",
+      impact: "Distributed data pipelines on AWS with Python, Spark and Lambda, plus BlackRock Aladdin ↔ Snowflake API integrations and a CloudWatch observability stack.",
       bullets: [
         "Designed distributed data pipelines on AWS using Python, Spark, and Lambda, reducing daily load times by 80%.",
         "Engineered REST API integrations between BlackRock Aladdin and Snowflake with retry logic, reducing production errors by 95%.",
@@ -94,6 +107,7 @@ export const resume = {
       role: "Software Engineering Intern",
       period: "July 2021 — Apr 2022",
       logo: "ivavsys-logo.png",
+      impact: "ARIMA-LSTM forecasting services behind REST endpoints to predict SLA breaches, with operational dashboards for high-traffic events.",
       bullets: [
         "Developed Python forecasting services using ARIMA-LSTM models exposed via REST endpoints to predict SLA breaches.",
         "Built operational dashboards integrated with backend APIs to preempt production bottlenecks during high-traffic events."
@@ -105,6 +119,8 @@ export const resume = {
     {
       slug: "portfolio-lens",
       title: "PortfolioLens",
+      headline: "Private-capital analytics platform — normalized Postgres schema holding sub-100ms responses, JWT auth with role-based access.",
+      techLine: "React · Node.js · FastAPI · PostgreSQL · Docker",
       status: "live" as const,
       featured: true,
       description: "Private Capital Analytics Platform for tracking portfolio metrics and IRR calculations.",
@@ -120,6 +136,8 @@ export const resume = {
     {
       slug: "lecture-scribe",
       title: "LectureScribe",
+      headline: "Whisper transcription service: one hour of audio in under five minutes, async Celery/Redis queue for jobs up to two hours.",
+      techLine: "Python · FastAPI · Celery · Redis · Whisper",
       status: "live" as const,
       featured: true,
       description: "AI-Powered Transcription Service serving Whisper ML inference for multi-language audio.",
@@ -135,6 +153,8 @@ export const resume = {
     {
       slug: "nexus-ai",
       title: "Nexus AI",
+      headline: "Real-time market intelligence — 1M+ Kafka messages a day, windowed Spark Streaming transforms, Grafana dashboards.",
+      techLine: "Kafka · Spark · AWS EMR · dbt · Grafana",
       status: "live" as const,
       featured: true,
       description: "Real-time Financial Intelligence Platform ingesting live market data via Kafka and Spark on EMR.",
@@ -194,9 +214,37 @@ export const resume = {
     }
   ],
 
-  posts: [] as Array<{
+  // TODO(tushar): titles and excerpts below are drafts from the design review —
+  // replace each `url` with the real Medium post link before sharing the site.
+  posts: [
+    {
+      title: "Cutting p95 latency by 40% without touching the database",
+      date: "Aug 2026",
+      read: "7 min read",
+      tag: "Backend",
+      excerpt: "What actually moved the needle on a Python REST service fanning out to 18 downstream channels — and the three things that did nothing.",
+      url: "https://medium.com/@tusharpanthri"
+    },
+    {
+      title: "Aladdin to Snowflake: designing retries you can trust",
+      date: "Jun 2026",
+      read: "9 min read",
+      tag: "Data pipelines",
+      excerpt: "Idempotency keys, backoff windows and dead-letter handling for a financial integration where a duplicate write is worse than a failed one.",
+      url: "https://medium.com/@tusharpanthri"
+    },
+    {
+      title: "Spark vs Dask vs Ray, benchmarked on the same workload",
+      date: "Apr 2026",
+      read: "11 min read",
+      tag: "Distributed systems",
+      excerpt: "One Parquet dataset, three engines, identical transforms. Where each one wins, and why partitioning mattered more than the engine.",
+      url: "https://medium.com/@tusharpanthri"
+    }
+  ] as Array<{
     title: string;
     date: string;
+    read: string;
     excerpt: string;
     tag: string;
     url: string;

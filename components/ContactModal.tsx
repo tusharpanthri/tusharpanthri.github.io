@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // 1. Create a form at https://formspree.io and paste its id here.
 const FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
@@ -36,6 +36,27 @@ export default function ContactModal({ onClose }: { onClose: () => void }) {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [err, setErr] = useState('');
+  const messageRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
+
+  useEffect(() => {
+    const el = messageRef.current;
+    if (el) {
+      el.focus();
+      el.setSelectionRange(el.value.length, el.value.length);
+    }
+  }, []);
 
   async function submit() {
     if (sending) return;
@@ -49,7 +70,7 @@ export default function ContactModal({ onClose }: { onClose: () => void }) {
       const res = await fetch(FORM_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({ name, email, message, _gotcha: '' }),
       });
       if (!res.ok) throw new Error('bad status');
       setSent(true);
@@ -82,6 +103,9 @@ export default function ContactModal({ onClose }: { onClose: () => void }) {
         }}
       />
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Send a message"
         style={{
           position: 'relative',
           width: 560,
@@ -183,12 +207,22 @@ export default function ContactModal({ onClose }: { onClose: () => void }) {
           </div>
         ) : (
           <div style={{ padding: '26px 30px 30px' }}>
+            <input
+              type="text"
+              name="_gotcha"
+              tabIndex={-1}
+              autoComplete="off"
+              value=""
+              onChange={() => {}}
+              style={{ position: 'absolute', left: '-9999px', width: 1, height: 1 }}
+              aria-hidden="true"
+            />
             <div style={{ display: 'flex', gap: 14, marginBottom: 18 }}>
               <label style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 7 }}>
                 <span style={labelStyle}>Your name</span>
                 <input
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => { setName(e.target.value); setErr(''); }}
                   placeholder="Jane Doe"
                   style={inputStyle}
                 />
@@ -197,7 +231,7 @@ export default function ContactModal({ onClose }: { onClose: () => void }) {
                 <span style={labelStyle}>Your email</span>
                 <input
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => { setEmail(e.target.value); setErr(''); }}
                   type="email"
                   placeholder="jane@company.com"
                   style={inputStyle}
@@ -207,8 +241,9 @@ export default function ContactModal({ onClose }: { onClose: () => void }) {
             <label style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
               <span style={labelStyle}>Message</span>
               <textarea
+                ref={messageRef}
                 value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={(e) => { setMessage(e.target.value); setErr(''); }}
                 rows={5}
                 style={{ ...inputStyle, lineHeight: 1.5, resize: 'vertical' }}
               />

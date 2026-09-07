@@ -9,6 +9,7 @@
   --color-accent-yellow: #FFE119;
   --color-accent-red: #FF4B2B;
   --color-muted: #6E675A;
+  --color-sand: #E5DFCA;
 }
 
 :root {
@@ -122,6 +123,18 @@ html[data-theme="dark"] .grain-overlay {
 @keyframes termRise {
   from { transform: translateY(100%); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes softPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editorial-marquee,
+  .availability-dot {
+    animation: none;
+  }
 }
 
 /* Print / Resume Ink flow */

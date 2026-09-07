@@ -133,14 +133,14 @@ const Terminal = () => {
       onClick={() => setTerminalOpen(false)}
     >
       <div
-        className="w-full max-w-4xl border-4 border-b-0 border-near-black rounded-t-xl overflow-hidden"
+        className="w-full max-w-[1080px] border-2 border-b-0 border-near-black overflow-hidden"
         style={{ background: '#11100D', animation: 'termRise 0.25s ease-out' }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-2 px-4 py-3 border-b-2 border-[#2a2820]">
-          <span className="w-3 h-3 rounded-full bg-[#FF5F56]"></span>
-          <span className="w-3 h-3 rounded-full bg-[#FFBD2E]"></span>
-          <span className="w-3 h-3 rounded-full bg-[#27C93F]"></span>
+          <span className="w-2 h-2 bg-accent-red"></span>
+          <span className="w-2 h-2 bg-accent-yellow"></span>
+          <span className="w-2 h-2 bg-cream"></span>
           <span className="ml-3 font-mono text-xs text-[#6E675A] uppercase tracking-widest">
             {resume.name.toLowerCase().replace(/\s+/g, '-')}@portfolio: ~
           </span>
@@ -166,6 +166,7 @@ const Terminal = () => {
             <span>{PROMPT}</span>
             <input
               ref={inputRef}
+              aria-label="Terminal command"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               className="flex-1 bg-transparent outline-none text-cream caret-transparent"

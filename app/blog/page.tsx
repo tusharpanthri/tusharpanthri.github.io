@@ -27,7 +27,7 @@ export default function BlogPage() {
           <div className="grid gap-6">
             {resume.posts.map((post) => (
               <a
-                key={post.url}
+                key={post.title}
                 href={post.url}
                 target="_blank"
                 rel="noopener noreferrer"
