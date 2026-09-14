@@ -29,7 +29,7 @@ export default function Home() {
             </p>
             <h1 className="text-[52px] sm:text-[78px] font-extrabold tracking-[-.035em] leading-[.96] [text-wrap:pretty]">{resume.name}</h1>
             <p className="text-[22px] sm:text-[25px] font-medium leading-[1.35] max-w-[620px] [text-wrap:pretty]">
-              Software engineer, 3+ years building backend services, REST APIs and distributed data pipelines on AWS for financial clients — American Express, Ameriprise.
+              Software engineer with 3+ years building backend services, REST APIs, and distributed data pipelines on AWS for American Express and Ameriprise.
             </p>
             <div className="flex flex-wrap gap-3.5 items-center pt-1">
               <a href={`mailto:${resume.email}`} className="bg-near-black text-cream px-7 py-[15px] text-[15px] font-bold shadow-[5px_5px_0_#FFE119]">Email me</a>
@@ -80,7 +80,7 @@ export default function Home() {
       <section className={`${column} pt-16 pb-4`}>
         <div className="flex flex-wrap gap-4 items-baseline justify-between mb-8">
           <h2 className={sectionHeading}>Selected projects</h2>
-          <Link href="/projects/" className={metadataStyle}>all six →</Link>
+          <Link href="/projects/" className={metadataStyle}>all projects →</Link>
         </div>
         {featuredProjects.map((project) => (
           <Link key={project.slug} href={`/projects/${project.slug}/`} className="grid md:grid-cols-[1fr_300px] gap-5 md:gap-10 items-start py-7 border-t border-near-black/20 dark:border-[var(--dm-border)] hover:bg-sand dark:hover:bg-[var(--dm-surface)]">
@@ -141,7 +141,7 @@ export default function Home() {
         <div className={`${column} py-[76px] flex flex-wrap items-end justify-between gap-12`}>
           <div className="flex-1 min-w-0 basis-[460px]">
             <h2 className="text-[40px] sm:text-[54px] font-extrabold tracking-[-.035em] leading-[1.02] mb-4 [text-wrap:pretty]">Hiring for backend<br />or data platform work?</h2>
-            <p className="text-[19px] leading-[1.5] max-w-[520px] [text-wrap:pretty]">I’m looking for my next role and happy to talk through anything in here. Copy my address, or send a message — it reaches my inbox directly.</p>
+            <p className="text-[19px] leading-[1.5] max-w-[520px] [text-wrap:pretty]">I’m looking for my next role and happy to talk through anything here. Copy my address or send a message. It reaches my inbox directly.</p>
             <div className="flex items-center gap-2.5 font-mono text-[13px] text-[#4a4640] mt-[22px] min-h-5">
               <span className="w-2 h-2 bg-near-black rounded-full shrink-0" />
               <NYClockLine />

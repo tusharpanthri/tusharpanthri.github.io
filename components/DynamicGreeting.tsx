@@ -29,7 +29,7 @@ const DynamicGreeting = () => {
 
   return (
     <span className="italic">
-       — {message}
+       {message}
     </span>
   );
 };

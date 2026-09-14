@@ -1,5 +1,5 @@
 export const STOIC_QUOTES = [
-  "You have power over your mind—not outside events. Realize this, and you will find strength.",
+  "You have power over your mind, not outside events. Realize this, and you will find strength.",
   "The impediment to action advances action. What stands in the way becomes the way.",
   "Waste no more time arguing about what a good man should be. Be one.",
   "It is impossible for a man to learn what he thinks he already knows.",

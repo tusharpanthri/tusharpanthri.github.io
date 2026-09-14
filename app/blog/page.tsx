@@ -20,7 +20,7 @@ export default function BlogPage() {
           <div className="bg-white dark:bg-[var(--dm-surface)] border-4 border-near-black dark:border-[var(--dm-border)] p-10 md:p-16 shadow-[7px_7px_0_#11100D] dark:shadow-[7px_7px_0_var(--dm-shadow)] text-center">
             <p className="text-2xl font-black uppercase tracking-tight mb-2">No posts yet</p>
             <p className="text-muted dark:text-[var(--dm-muted)] font-medium">
-              Check back soon — new writing lands here first.
+              Check back soon. New writing lands here first.
             </p>
           </div>
         ) : (

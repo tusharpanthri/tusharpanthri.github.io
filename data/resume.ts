@@ -81,7 +81,7 @@ export const resume = {
     {
       company: "American Express",
       role: "Software Engineer",
-      period: "Oct 2023 — Aug 2024",
+      period: "Oct 2023 to Aug 2024",
       logo: "amex-logo.png",
       impact: "Python backend services and REST endpoints for 18 U.S. commercial channels; owned SDLC for ETL microservices on AWS end to end, from design docs to on-call.",
       bullets: [
@@ -93,7 +93,7 @@ export const resume = {
     {
       company: "Ameriprise Financial",
       role: "Software Engineer",
-      period: "May 2022 — Oct 2023",
+      period: "May 2022 to Oct 2023",
       logo: "ameriprise-logo.png",
       impact: "Distributed data pipelines on AWS with Python, Spark and Lambda, plus BlackRock Aladdin ↔ Snowflake API integrations and a CloudWatch observability stack.",
       bullets: [
@@ -103,143 +103,68 @@ export const resume = {
       ]
     },
     {
-      company: "Ivavsys Technologies",
-      role: "Software Engineering Intern",
-      period: "July 2021 — Apr 2022",
-      logo: "ivavsys-logo.png",
-      impact: "ARIMA-LSTM forecasting services behind REST endpoints to predict SLA breaches, with operational dashboards for high-traffic events.",
+      company: "Cognizant Technology Solutions",
+      role: "Software Developer",
+      period: "June 2020 to May 2022",
+      impact: "Built Python and Java backend modules for enterprise insurance and financial applications in Agile/Scrum teams; wrote unit and integration tests and resolved production defects with QA and business analysts.",
       bullets: [
-        "Developed Python forecasting services using ARIMA-LSTM models exposed via REST endpoints to predict SLA breaches.",
-        "Built operational dashboards integrated with backend APIs to preempt production bottlenecks during high-traffic events."
+        "Built Python and Java backend modules for enterprise insurance and financial domain client applications following Agile/Scrum delivery cycles.",
+        "Wrote unit and integration tests to validate features and catch regressions; resolved production defects via log-based root-cause analysis in collaboration with QA and business analysts."
       ]
     }
   ],
 
   projects: [
     {
-      slug: "portfolio-lens",
-      title: "PortfolioLens",
-      headline: "Private-capital analytics platform — normalized Postgres schema holding sub-100ms responses, JWT auth with role-based access.",
-      techLine: "React · Node.js · FastAPI · PostgreSQL · Docker",
+      slug: "distributed-transaction-processing",
+      title: "Scalable Distributed Transaction Processing System",
       status: "live" as const,
       featured: true,
-      description: "Private Capital Analytics Platform for tracking portfolio metrics and IRR calculations.",
-      tech: ["React.js", "Node.js", "FastAPI", "PostgreSQL", "Docker"],
+      description: "Sharded, fault-tolerant transaction engine in Go using Multi-Paxos leader election and Two-Phase Commit over gRPC.",
+      headline: "A sharded Go transaction engine using Multi-Paxos and Two-Phase Commit over gRPC. It includes crash recovery and handles 1,000+ transactions per second across three clusters.",
+      techLine: "Go · Multi-Paxos · 2PC · gRPC",
+      tech: ["Go", "Multi-Paxos", "2PC", "gRPC"],
       repoUrl: null,
       liveUrl: null,
       details: [
-        "Full-stack analytics platform with React frontend and Node.js/FastAPI backend.",
-        "Designed normalized PostgreSQL schema for sub-100ms response times.",
-        "Implemented JWT auth with role-based access control."
+        "Sharded, fault-tolerant transaction engine in Go using Multi-Paxos leader election and Two-Phase Commit over gRPC.",
+        "Implemented configurable sharding and tunable consistency with crash recovery on node failure, verifying linearizable state-machine replication while sustaining 1,000+ transactions/sec across three clusters."
       ]
     },
     {
-      slug: "lecture-scribe",
-      title: "LectureScribe",
-      headline: "Whisper transcription service: one hour of audio in under five minutes, async Celery/Redis queue for jobs up to two hours.",
-      techLine: "Python · FastAPI · Celery · Redis · Whisper",
+      slug: "byzantine-fault-tolerant-banking",
+      title: "Byzantine Fault-Tolerant Banking System",
       status: "live" as const,
       featured: true,
-      description: "AI-Powered Transcription Service serving Whisper ML inference for multi-language audio.",
-      tech: ["Python", "FastAPI", "Celery", "Redis", "Whisper", "Docker"],
+      description: "Byzantine fault-tolerant banking backend in Go using linear-PBFT over gRPC, tolerating f faulty replicas in a 3f+1 cluster.",
+      headline: "A Go banking backend using linear-PBFT over gRPC. It provides fault tolerance across a seven-node cluster serving ten concurrent clients while reducing per-request messages toward linear complexity.",
+      techLine: "Go · PBFT · gRPC",
+      tech: ["Go", "PBFT", "gRPC"],
       repoUrl: null,
       liveUrl: null,
       details: [
-        "Backend service transcribing 1-hour audio in under 5 minutes using Whisper.",
-        "Async job queue with Celery/Redis for tasks up to 2 hours.",
-        "Structured retry logic and webhook notifications for fault-tolerance."
-      ]
-    },
-    {
-      slug: "nexus-ai",
-      title: "Nexus AI",
-      headline: "Real-time market intelligence — 1M+ Kafka messages a day, windowed Spark Streaming transforms, Grafana dashboards.",
-      techLine: "Kafka · Spark · AWS EMR · dbt · Grafana",
-      status: "live" as const,
-      featured: true,
-      description: "Real-time Financial Intelligence Platform ingesting live market data via Kafka and Spark on EMR.",
-      tech: ["Kafka", "Spark", "AWS EMR", "dbt", "Grafana"],
-      repoUrl: null,
-      liveUrl: null,
-      details: [
-        "Ingested 1M+ messages per day using Kafka producers.",
-        "Implemented windowed transformations in Spark Streaming.",
-        "Visualized market trends with real-time Grafana dashboards."
-      ]
-    },
-    {
-      slug: "distributed-mind",
-      title: "DistributedMind",
-      status: "live" as const,
-      featured: false,
-      description: "Large-scale data processing framework built to benchmark transformations and query optimization.",
-      tech: ["Spark", "Dask", "Ray", "Docker", "S3"],
-      repoUrl: null,
-      liveUrl: null,
-      details: [
-        "Optimized Parquet partitioning for faster query performance.",
-        "Benchmarked Dask vs Spark for specific compute workloads.",
-        "Automated deployment using Docker and Kubernetes."
-      ]
-    },
-    {
-      slug: "datavault-explorer",
-      title: "DataVault Explorer",
-      status: "live" as const,
-      featured: false,
-      description: "Interactive visualizer for Snowflake Data Vault 2.0 architectures with automated schema generation.",
-      tech: ["React", "D3.js", "Snowflake", "Python"],
-      repoUrl: null,
-      liveUrl: null,
-      details: [
-        "Generated DDL statements automatically from JSON schemas.",
-        "Visualized Hub, Sat, and Link relationships using D3 force graphs.",
-        "Integrated Snowflake SQL API for real-time metadata extraction."
-      ]
-    },
-    {
-      slug: "sentinel-etl",
-      title: "Sentinel ETL",
-      status: "live" as const,
-      featured: false,
-      description: "Lightweight, self-healing ETL framework for Python with built-in Slack alerting and Prometheus metrics.",
-      tech: ["Python", "Prometheus", "Slack API", "PostgreSQL"],
-      repoUrl: null,
-      liveUrl: null,
-      details: [
-        "Built custom decorators for automated retry and error logging.",
-        "Exposed job health metrics via Prometheus scraping endpoints.",
-        "Automated Slack notifications for pipeline failures."
+        "Byzantine fault-tolerant banking backend in Go using linear-PBFT over gRPC, tolerating f faulty replicas in a 3f+1 cluster.",
+        "Ran pre-prepare, prepare, commit, and view-change phases while cutting per-request message complexity from quadratic toward linear, preserving safety and liveness on a seven-node cluster serving ten concurrent clients."
       ]
     }
   ],
 
-  // TODO(tushar): titles and excerpts below are drafts from the design review —
-  // replace each `url` with the real Medium post link before sharing the site.
   posts: [
     {
-      title: "Cutting p95 latency by 40% without touching the database",
-      date: "Aug 2026",
-      read: "7 min read",
-      tag: "Backend",
-      excerpt: "What actually moved the needle on a Python REST service fanning out to 18 downstream channels — and the three things that did nothing.",
-      url: "https://medium.com/@tusharpanthri"
+      title: "The Hidden Brain of Claude Code: What Actually Lives in Your .claude Directory",
+      date: "Medium",
+      read: "Read article",
+      tag: "Claude Code",
+      excerpt: "A guided look inside Claude Code’s local workspace: the files, configuration, and project context that shape how it works.",
+      url: "https://medium.com/@tusharpanthri/the-hidden-brain-of-claude-code-what-actually-lives-in-your-claude-directory-ce0ce27ef858"
     },
     {
-      title: "Aladdin to Snowflake: designing retries you can trust",
-      date: "Jun 2026",
-      read: "9 min read",
-      tag: "Data pipelines",
-      excerpt: "Idempotency keys, backoff windows and dead-letter handling for a financial integration where a duplicate write is worse than a failed one.",
-      url: "https://medium.com/@tusharpanthri"
-    },
-    {
-      title: "Spark vs Dask vs Ray, benchmarked on the same workload",
-      date: "Apr 2026",
-      read: "11 min read",
-      tag: "Distributed systems",
-      excerpt: "One Parquet dataset, three engines, identical transforms. Where each one wins, and why partitioning mattered more than the engine.",
-      url: "https://medium.com/@tusharpanthri"
+      title: "Claude’s Memory Is a Filesystem Now",
+      date: "Medium",
+      read: "Read article",
+      tag: "AI tooling",
+      excerpt: "How Claude Code turns a filesystem into durable context, and what that means for memory, continuity, and software work.",
+      url: "https://medium.com/@tusharpanthri/claudes-memory-is-a-filesystem-now-bbf7511229a9"
     }
   ] as Array<{
     title: string;
@@ -252,7 +177,7 @@ export const resume = {
 
   certifications: [
     {
-      name: "AWS Certified Solutions Architect – Associate (SAA-C03)",
+      name: "AWS Certified Solutions Architect Associate (SAA-C03)",
       issuer: "Amazon Web Services",
       logo: "aws-logo.png",
       link: "#"
@@ -275,7 +200,7 @@ export const resume = {
     {
       school: "Stony Brook University",
       degree: "M.S. in Computer Science and Applied Mathematics & Statistics",
-      period: "2024 — 2026",
+      period: "2024 to 2026",
       logo: "sbu-logo.png",
       courses: [
         { name: "Big Data Systems", description: "Learned distributed computing architectures and MapReduce fundamentals." },
@@ -286,7 +211,7 @@ export const resume = {
     {
       school: "GGSIPU Delhi",
       degree: "B.Tech in Electronics & Communication",
-      period: "2017 — 2021",
+      period: "2017 to 2021",
       logo: "ggsipu-logo.png",
       courses: [
         { name: "Digital Signal Processing", description: "Study of discrete-time signals and systems analysis." },

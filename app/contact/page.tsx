@@ -4,7 +4,7 @@ import { resume } from '@/data/resume';
 
 export const metadata: Metadata = {
   title: `Contact | ${resume.name}`,
-  description: `Get in touch with ${resume.name} — email, phone, GitHub, and LinkedIn.`,
+  description: `Get in touch with ${resume.name} by email, phone, GitHub, or LinkedIn.`,
 };
 
 export default function ContactPage() {

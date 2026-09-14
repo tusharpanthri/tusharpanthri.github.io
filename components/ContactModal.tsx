@@ -31,7 +31,7 @@ const inputStyle: React.CSSProperties = {
 export default function ContactModal({ onClose }: { onClose: () => void }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('Hi Tushar, I really liked your profile — ');
+  const [message, setMessage] = useState('Hi Tushar, I really liked your profile. ');
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [err, setErr] = useState('');
@@ -74,7 +74,7 @@ export default function ContactModal({ onClose }: { onClose: () => void }) {
       if (!res.ok) throw new Error('bad status');
       setSent(true);
     } catch {
-      setErr('Something broke — email me directly at tusharpanthri@gmail.com');
+      setErr('Something broke. Email me directly at tusharpanthri@gmail.com');
     } finally {
       setSending(false);
     }
@@ -129,7 +129,7 @@ export default function ContactModal({ onClose }: { onClose: () => void }) {
             textTransform: 'uppercase',
           }}
         >
-          <span>new message — tusharpanthri@gmail.com</span>
+          <span>new message: tusharpanthri@gmail.com</span>
           <button
             onClick={onClose}
             aria-label="Close"
@@ -265,7 +265,7 @@ export default function ContactModal({ onClose }: { onClose: () => void }) {
                   lineHeight: 1.4,
                 }}
               >
-                {err || 'Goes straight to my inbox — no newsletter, no CRM.'}
+                {err || 'Goes straight to my inbox. No newsletter or CRM.'}
               </span>
               <button
                 onClick={submit}

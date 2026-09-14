@@ -22,7 +22,7 @@ export default function CopyEmailButton() {
     try {
       await navigator.clipboard.writeText(resume.email);
     } catch {
-      result = 'copy failed — use mail app';
+      result = 'Copy failed. Use mail app';
     }
     if (!mountedRef.current) return;
     setLabel(result);
