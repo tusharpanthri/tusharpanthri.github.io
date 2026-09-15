@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ExternalLink } from 'lucide-react';
 import { Github } from '@/components/Icons';
@@ -12,9 +13,11 @@ interface ProjectCardProps {
   repoUrl?: string | null;
   liveUrl?: string | null;
   details?: string[];
+  diagramImage?: string;
+  diagramAlt?: string;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ slug, title, description, tech, repoUrl, liveUrl, details }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ slug, title, description, tech, repoUrl, liveUrl, details, diagramImage, diagramAlt }) => {
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
 
@@ -26,11 +29,21 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ slug, title, description, tec
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => router.push(`/projects/${slug}/`)}
     >
-      {/* Typographic Header Treatment */}
+      {/* Project banner */}
       <div className="h-48 md:h-64 border-b-4 border-near-black dark:border-[var(--dm-border)] bg-cream relative overflow-hidden">
-        <div className="w-full h-full flex items-center justify-center font-black text-4xl opacity-10 uppercase select-none">
-          {title}
-        </div>
+        {diagramImage ? (
+          <Image
+            src={`/${diagramImage}`}
+            alt={diagramAlt ?? `${title} architecture diagram`}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center font-black text-4xl opacity-10 uppercase select-none">
+            {title}
+          </div>
+        )}
 
         {/* Details Overlay on Hover */}
         <div className={`absolute inset-0 bg-accent-yellow/95 text-near-black p-6 md:p-8 flex flex-col justify-center transition-all duration-300 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'}`}>
