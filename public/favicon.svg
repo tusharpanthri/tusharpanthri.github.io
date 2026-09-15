@@ -1,4 +1,6 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="32" rx="4" fill="#11100D"/>
-  <text x="16" y="22" text-anchor="middle" fill="#FFE119" font-family="monospace" font-weight="black" font-size="20">TP</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="10" fill="#11100D"/>
+  <path fill="#FFE119" d="M10 13h27v9H28v30H18V22h-8z"/>
+  <path fill="#EEE9D8" d="M32 13h12c10 0 16 5 16 15s-6 16-16 16h-3v8H31zm10 9h2c4 0 6 2 6 6s-2 7-6 7h-2z"/>
+  <path fill="#FF4B2B" d="M48 47h8v8h-8z"/>
 </svg>

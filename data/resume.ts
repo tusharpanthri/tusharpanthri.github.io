@@ -126,6 +126,8 @@ export const resume = {
       tech: ["Go", "Multi-Paxos", "2PC", "gRPC"],
       repoUrl: null,
       liveUrl: null,
+      diagramImage: "distributed-transaction-processing.png",
+      diagramAlt: "Distributed transaction processing topology with a central transaction engine connected to three server clusters.",
       details: [
         "Sharded, fault-tolerant transaction engine in Go using Multi-Paxos leader election and Two-Phase Commit over gRPC.",
         "Implemented configurable sharding and tunable consistency with crash recovery on node failure, verifying linearizable state-machine replication while sustaining 1,000+ transactions/sec across three clusters."
@@ -142,6 +144,8 @@ export const resume = {
       tech: ["Go", "PBFT", "gRPC"],
       repoUrl: null,
       liveUrl: null,
+      diagramImage: "byzantine-fault-tolerance.png",
+      diagramAlt: "Byzantine fault-tolerant banking topology showing a protected central vault, healthy replicas, and an isolated faulty replica.",
       details: [
         "Byzantine fault-tolerant banking backend in Go using linear-PBFT over gRPC, tolerating f faulty replicas in a 3f+1 cluster.",
         "Ran pre-prepare, prepare, commit, and view-change phases while cutting per-request message complexity from quadratic toward linear, preserving safety and liveness on a seven-node cluster serving ten concurrent clients."

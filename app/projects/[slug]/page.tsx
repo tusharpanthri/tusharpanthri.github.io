@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ExternalLink, ArrowLeft } from 'lucide-react';
@@ -64,6 +65,18 @@ export default async function ProjectDetailPage({
         <p className="text-xl md:text-2xl font-bold text-muted dark:text-[var(--dm-muted)] mb-8 leading-relaxed">
           {project.description}
         </p>
+
+        {project.diagramImage && (
+          <figure className="mb-10 overflow-hidden border-4 border-near-black dark:border-[var(--dm-border)] bg-cream shadow-[7px_7px_0_#11100D] dark:shadow-[7px_7px_0_var(--dm-shadow)]">
+            <Image
+              src={`/${project.diagramImage}`}
+              alt={project.diagramAlt}
+              width={1680}
+              height={941}
+              className="h-auto w-full"
+            />
+          </figure>
+        )}
 
         {(project.liveUrl || project.repoUrl) && (
           <div className="flex flex-wrap gap-4 mb-10">
