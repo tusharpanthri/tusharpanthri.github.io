@@ -8,7 +8,7 @@ export const resume = {
   github: "https://github.com/tusharpanthri",
   linkedin: "https://www.linkedin.com/in/tushar-panthri-963ab814a/",
   resumeUrl: "resume.pdf",
-  profileImage: "profile.jpg",
+  profileImage: "profile.png",
   summary: "Software Engineer with 3+ years building backend services, REST APIs, and distributed systems on AWS for financial clients. Hands-on with Python, Java, JavaScript, SQL, and full SDLC ownership including unit testing, CI/CD, code review, and on-call rotations.",
   proof: [
     { value: "−40%", label: "p95 latency on REST services serving 18 U.S. commercial channels at Amex" },
