@@ -6,6 +6,7 @@ import { resume } from "@/data/resume";
 import PageWrapper from "@/components/PageWrapper";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import InteractiveChatbot from "@/components/InteractiveChatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </PageWrapper>
+        <InteractiveChatbot />
       </body>
     </html>
   );
