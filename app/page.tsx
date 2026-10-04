@@ -94,6 +94,7 @@ export default function Home() {
             <div className="flex flex-col gap-3 items-start">
               <p className="font-mono text-[12px] tracking-[.04em] text-muted dark:text-[var(--dm-muted)] leading-[1.7] [text-wrap:pretty]">{project.techLine}</p>
               <Link href={`/projects/${project.slug}/`} className="font-mono text-[12px] border-b border-near-black dark:border-[var(--dm-muted)]">read the write-up →</Link>
+              {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="font-mono text-[12px] border-b border-near-black dark:border-[var(--dm-muted)]" aria-label={`${project.title} live demo`}>try the live demo ↗</a>}
               {project.repoUrl && <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="font-mono text-[12px] border-b border-near-black dark:border-[var(--dm-muted)]" aria-label={`${project.title} GitHub repository`}>view on GitHub ↗</a>}
             </div>
           </div>
