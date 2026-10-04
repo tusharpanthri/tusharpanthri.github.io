@@ -178,7 +178,7 @@ export const projectArticles: Record<string, ProjectArticle> = {
       ] },
       { title: 'The interesting tests are the dishonest ones', paragraphs: [
         'A useful verification plan would have a primary send conflicting proposals, a replica withhold messages, and clients submit overlapping transfers while leadership changes. Correct replicas should preserve an identical committed order; progress should resume when the protocol assumptions hold again.',
-        'Those are the failure scenarios the design should be judged against, not newly claimed test results. The portfolio summary describes the seven-node and ten-client setup. The project’s repository and live demo are linked above; a reproducible benchmark report would be needed to substantiate performance claims.'
+        'Those are the failure scenarios the design should be judged against, not newly claimed test results. The portfolio summary describes the seven-node and ten-client setup. The project’s repository is linked above; a reproducible benchmark report would be needed to substantiate performance claims.'
       ] },
       { title: 'Skepticism, made operational', paragraphs: [
         'Philosophical skepticism asks what justifies a belief. A fault-tolerant ledger asks a narrower and executable version: what evidence justifies applying this operation? One server’s assertion is insufficient when that server may be faulty.',

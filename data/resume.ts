@@ -169,7 +169,7 @@ export const resume = {
       techLine: "Go · Multi-Paxos · 2PC · WebSocket",
       tech: ["Go", "Multi-Paxos", "2PC", "WebSocket"],
       repoUrl: "https://github.com/tusharpanthri/paxos-2pc-payments",
-      liveUrl: null,
+      liveUrl: "https://tusharpanthri.github.io/distributed-banking-system/",
       diagramImage: "distributed-transaction-processing.png",
       diagramAlt: "Distributed transaction processing topology with a central transaction engine connected to three server clusters.",
       details: [
@@ -189,7 +189,7 @@ export const resume = {
       techLine: "Go · PBFT · gRPC",
       tech: ["Go", "PBFT", "gRPC"],
       repoUrl: "https://github.com/tusharpanthri/distributed-banking-system",
-      liveUrl: "https://tusharpanthri.github.io/distributed-banking-system/",
+      liveUrl: null,
       diagramImage: "byzantine-fault-tolerance.png",
       diagramAlt: "Byzantine fault-tolerant banking topology showing a protected central vault, healthy replicas, and an isolated faulty replica.",
       details: [
