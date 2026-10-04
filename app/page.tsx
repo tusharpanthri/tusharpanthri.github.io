@@ -29,7 +29,7 @@ export default function Home() {
             </p>
             <h1 className="text-[52px] sm:text-[78px] font-extrabold tracking-[-.035em] leading-[.96] [text-wrap:pretty]">{resume.name}</h1>
             <p className="text-[22px] sm:text-[25px] font-medium leading-[1.35] max-w-[620px] [text-wrap:pretty]">
-              Software engineer with 3+ years building backend services, REST APIs, and distributed data pipelines on AWS for American Express and Ameriprise.
+              Software engineer with 2+ years building Python, Spark, and AWS data services for American Express and Ameriprise as a TCS consultant. Now building payment-domain and distributed systems projects.
             </p>
             <div className="flex flex-wrap gap-3.5 items-center pt-1">
               <a href={`mailto:${resume.email}`} className="bg-near-black text-cream px-7 py-[15px] text-[15px] font-bold shadow-[5px_5px_0_#FFE119]">Email me</a>
@@ -83,19 +83,20 @@ export default function Home() {
           <Link href="/projects/" className={metadataStyle}>all projects →</Link>
         </div>
         {featuredProjects.map((project) => (
-          <Link key={project.slug} href={`/projects/${project.slug}/`} className="grid md:grid-cols-[1fr_300px] gap-5 md:gap-10 items-start py-7 border-t border-near-black/20 dark:border-[var(--dm-border)] hover:bg-sand dark:hover:bg-[var(--dm-surface)]">
+          <div key={project.slug} className="grid md:grid-cols-[1fr_300px] gap-5 md:gap-10 items-start py-7 border-t border-near-black/20 dark:border-[var(--dm-border)] hover:bg-sand dark:hover:bg-[var(--dm-surface)]">
             <div>
               <div className="flex flex-wrap items-center gap-3">
-                <h3 className="text-[27px] font-bold tracking-[-.02em]">{project.title}</h3>
-                <span className="bg-accent-yellow text-near-black px-2 py-[3px] font-mono text-[11px] uppercase tracking-[.14em]">{project.status}</span>
+                <h3 className="text-[27px] font-bold tracking-[-.02em]"><Link href={`/projects/${project.slug}/`}>{project.title}</Link></h3>
+                <span className="bg-accent-yellow text-near-black px-2 py-[3px] font-mono text-[11px] uppercase tracking-[.14em]">{project.projectLabel}</span>
               </div>
               <p className="text-[17px] leading-[1.55] text-[#35322c] dark:text-[var(--dm-text)] mt-2.5 max-w-[600px] [text-wrap:pretty]">{project.headline}</p>
             </div>
             <div className="flex flex-col gap-3 items-start">
               <p className="font-mono text-[12px] tracking-[.04em] text-muted dark:text-[var(--dm-muted)] leading-[1.7] [text-wrap:pretty]">{project.techLine}</p>
-              <span className="font-mono text-[12px] border-b border-near-black dark:border-[var(--dm-muted)]">read the write-up →</span>
+              <Link href={`/projects/${project.slug}/`} className="font-mono text-[12px] border-b border-near-black dark:border-[var(--dm-muted)]">read the write-up →</Link>
+              {project.repoUrl && <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="font-mono text-[12px] border-b border-near-black dark:border-[var(--dm-muted)]" aria-label={`${project.title} GitHub repository`}>view on GitHub ↗</a>}
             </div>
-          </Link>
+          </div>
         ))}
       </section>
 

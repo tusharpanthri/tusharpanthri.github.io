@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Can You Recognize the Pattern? | Tushar Panthri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800&family=Overpass+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EEF1F3; --panel:#FFFFFF; --ink:#18202B; --muted:#5B6573; --rule:#CDD3DA; --soft:#E3E8EC;
+  --shape:#0B7A6A; --promise:#2E57C9; --ask:#87358A; --fallback:#A86A12;
+  --good:#16794A; --bad:#B42318;
+  --sans:"Overpass", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono:"Overpass Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#11161C; --panel:#1A2028; --ink:#E4E8ED; --muted:#96A0AD; --rule:#2C3540; --soft:#222A33;
+    --shape:#3CC2AC; --promise:#7C9BF2; --ask:#D184CF; --fallback:#E2A548; --good:#4ACB8A; --bad:#F2795F;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#11161C; --panel:#1A2028; --ink:#E4E8ED; --muted:#96A0AD; --rule:#2C3540; --soft:#222A33;
+  --shape:#3CC2AC; --promise:#7C9BF2; --ask:#D184CF; --fallback:#E2A548; --good:#4ACB8A; --bad:#F2795F;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--promise);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px}
+
+header h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1;margin:0;font-weight:800;letter-spacing:-0.02em}
+header p{margin:10px 0 0;color:var(--muted);max-width:62ch}
+.lines{display:flex;gap:6px;margin:18px 0 0}
+.lines span{height:6px;flex:1;border-radius:3px}
+
+nav.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:26px 0 22px;border-bottom:1px solid var(--rule);padding-bottom:10px}
+nav.tabs button{background:none;border:1px solid transparent;border-radius:8px;padding:7px 14px;cursor:pointer;font-weight:600;color:var(--muted)}
+nav.tabs button[aria-selected="true"]{background:var(--panel);border-color:var(--rule);color:var(--ink)}
+.view[hidden]{display:none}
+
+/* Map */
+.map{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px;align-items:start}
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;color:var(--muted);font-size:.95rem}
+.toggle{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.toggle input{width:18px;height:18px;accent-color:var(--promise)}
+.group{position:relative;padding:4px 0 14px 34px;margin-bottom:6px}
+.group::before{content:"";position:absolute;left:11px;top:6px;bottom:0;width:6px;border-radius:3px;background:var(--c)}
+.group h2{font-size:1.15rem;margin:0 0 8px;color:var(--c);font-weight:800}
+.group h2 small{display:block;color:var(--muted);font-weight:400;font-size:.9rem}
+.rung{position:relative;margin:0 0 14px}
+.rung::before{content:attr(data-n);position:absolute;left:-34px;top:0;width:28px;height:28px;border-radius:50%;background:var(--paper);border:4px solid var(--c);font-size:.72rem;font-weight:800;display:grid;place-items:center;line-height:1}
+.rung h3{margin:0;font-size:1.02rem;font-weight:600;padding-top:2px}
+.branches{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:5px}
+.branches li{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:.93rem;color:var(--muted)}
+.chip{border:2px solid var(--c);background:var(--panel);border-radius:999px;padding:2px 12px;cursor:pointer;font-weight:600;font-size:.9rem;color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--c);color:var(--paper)}
+.hide .chip:not(.revealed){color:transparent;text-shadow:0 0 0 transparent;background:repeating-linear-gradient(135deg,var(--soft) 0 6px,var(--panel) 6px 12px);min-width:120px}
+
+.detail{position:sticky;top:calc(16px + env(safe-area-inset-top,0px));background:var(--panel);border:1px solid var(--rule);border-top:8px solid var(--c,var(--rule));border-radius:12px;padding:20px 22px;max-height:calc(100vh - 32px);overflow:auto}
+.detail h2{margin:0;font-size:1.6rem;line-height:1.15;font-weight:800}
+.detail .where{color:var(--muted);font-size:.92rem;margin:4px 0 14px}
+.detail h4{margin:16px 0 4px;font-size:.95rem;color:var(--c)}
+.detail p{margin:0}
+.anchors{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.anchor{border:1px solid var(--rule);border-radius:6px;padding:2px 8px;font-size:.88rem}
+.anchor.solved{border-color:var(--good)}
+.anchor.solved::after{content:" solved";color:var(--good);font-weight:600}
+.tidbit{border-left:4px solid var(--c);padding:8px 12px;background:var(--soft);border-radius:0 8px 8px 0}
+pre{font-family:var(--mono);font-size:.82rem;line-height:1.55;background:var(--soft);border-radius:8px;padding:12px 14px;margin:4px 0 0;overflow-x:auto}
+.trap{color:var(--ink)}
+.trap b{color:var(--bad)}
+.empty{color:var(--muted)}
+
+/* Drill */
+.drill{max-width:720px}
+.modes{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.modes button{border:1px solid var(--rule);background:var(--panel);border-radius:8px;padding:6px 12px;cursor:pointer}
+.modes button[aria-pressed="true"]{border-color:var(--ink);font-weight:700}
+.score{display:flex;gap:18px;color:var(--muted);font-size:.95rem;margin-bottom:12px}
+.score b{color:var(--ink)}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:22px}
+.card .lc{color:var(--muted);font-family:var(--mono);font-size:.9rem}
+.card h2{margin:2px 0 4px;font-size:1.7rem;line-height:1.15;font-weight:800}
+.card .flags{display:flex;gap:8px;font-size:.85rem;color:var(--muted)}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:18px 0 0}
+.opts button{border:2px solid var(--rule);background:var(--paper);border-radius:10px;padding:12px;text-align:left;cursor:pointer;font-weight:600}
+.opts button:disabled{cursor:default}
+.opts button.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--panel))}
+.opts button.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--panel))}
+.result{margin-top:16px}
+.result .verdict{font-weight:800;font-size:1.1rem}
+.result .verdict.ok{color:var(--good)} .result .verdict.no{color:var(--bad)}
+.result .path{margin:6px 0;color:var(--muted)}
+.next{margin-top:14px;border:none;background:var(--ink);color:var(--paper);border-radius:8px;padding:10px 18px;font-weight:700;cursor:pointer}
+
+@media (max-width:860px){
+  .map{grid-template-columns:1fr}
+  .detail{position:static;max-height:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .detail.flash{animation:flash .5s ease-out}
+  @keyframes flash{from{box-shadow:0 0 0 4px var(--c)}to{box-shadow:0 0 0 0 transparent}}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="/" style="display:inline-block;margin-bottom:22px;color:var(--muted);font-family:var(--mono);font-size:.9rem;text-underline-offset:4px">&larr; Back to Tushar's portfolio</a>
+  <p style="margin:0 0 10px;font-family:var(--mono);font-size:.85rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--shape)">Feeling Lucky!</p>
+  <h1>Can You Recognize the Pattern?</h1>
+  <p>Take the test: read a coding problem and choose the algorithm pattern that fits. Need a hint? Explore the Map to learn what to look for.</p>
+  <div class="lines" aria-hidden="true">
+    <span style="background:var(--shape)"></span><span style="background:var(--promise)"></span><span style="background:var(--ask)"></span><span style="background:var(--fallback)"></span>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Practice views">
+  <button role="tab" aria-selected="true" data-view="drill">Test</button>
+  <button role="tab" aria-selected="false" data-view="map">Map</button>
+</nav>
+
+<section class="view" id="view-map" hidden>
+  <div class="toolbar">
+    <label class="toggle"><input type="checkbox" id="hideToggle"> Hide pattern names (tap a stop to reveal it)</label>
+  </div>
+  <div class="map">
+    <div id="ladder"></div>
+    <aside class="detail" id="detail"><p class="empty">Pick any stop on the ladder to see its signal, your anchor problem, the tidbit, a template and the trap.</p></aside>
+  </div>
+</section>
+
+<section class="view drill" id="view-drill">
+  <div class="modes" id="modes">
+    <button aria-pressed="true" data-mode="all">All problems</button>
+    <button aria-pressed="false" data-mode="solved">Solved only</button>
+    <button aria-pressed="false" data-mode="traps">Traps only</button>
+    <button aria-pressed="false" data-mode="missed">Missed only</button>
+    <button aria-pressed="false" data-mode="reset">Reset score</button>
+  </div>
+  <div class="score" id="score"></div>
+  <div class="card" id="card"></div>
+</section>
+
+</div>
+
+<script>
+const GROUPS = [
+  {id:"shape", c:"var(--shape)", title:"Shape: what is the data?", sub:"Check structure before technique."},
+  {id:"promise", c:"var(--promise)", title:"Promise: what does the input guarantee?", sub:"Sorted order or tiny n changes everything."},
+  {id:"ask", c:"var(--ask)", title:"Ask: what does the question want?", sub:"The verb in the problem statement decides."},
+  {id:"fallback", c:"var(--fallback)", title:"Fallback: none of the above", sub:"What is left when nothing structural fits."}
+];
+
+const RUNGS = [
+  {g:"shape", q:"Is it a tree?", b:[["Answer depends on levels?","tree-bfs"],["Otherwise","tree-dfs"]]},
+  {g:"shape", q:"Is it a graph or grid?", b:[["Dependencies or ordering?","topo"],["Fewest steps, equal costs?","bfs"],["Fewest steps, weighted edges?","dijkstra"],["Connected, groups, islands?","connectivity"],["Try every path on a small board?","backtracking"]]},
+  {g:"shape", q:"Is it a linked list?", b:[["Middle, cycle, nth, reverse?","ll"],["Merge k lists?","heap"]]},
+  {g:"shape", q:"Ranges with a start and end?", b:[["Merge, insert, count rooms","intervals"]]},
+  {g:"promise", q:"Sorted, or is the answer monotonic?", b:[["Searching a target, a boundary, or the smallest x that works?","binary-search"],["Pairs, merging, deduping?","two-pointers"]]},
+  {g:"promise", q:"n about 20 or less, or asks for all combinations?", b:[["Generate everything","backtracking"]]},
+  {g:"ask", q:"Kth, top k, k closest?", b:[["Keep the best k","heap"]]},
+  {g:"ask", q:"Seen it before, count it, group it?", b:[["Instant lookup","hash"]]},
+  {g:"ask", q:"Pair from both ends, or partition in place?", b:[["Squeeze or swap","two-pointers"]]},
+  {g:"ask", q:"Contiguous subarray or substring?", b:[["Window that must stay valid?","sliding-window"],["Range sums or products?","prefix"],["Next greater or smaller?","mono-stack"],["Best sum, nothing invalid?","dp"]]},
+  {g:"ask", q:"Words plus a dictionary?", b:[["Prefix lookups?","trie"],["Can the string be split?","dp"]]},
+  {g:"ask", q:"Max, min, or number of ways?", b:[["Local choice never regretted?","greedy"],["Overlapping subproblems?","dp"],["Minimize the maximum?","binary-search"]]},
+  {g:"fallback", q:"Matching or nested symbols?", b:[["Push and match","stack"]]},
+  {g:"fallback", q:"Implement a class with fast operations?", b:[["Combine structures","design"]]},
+  {g:"fallback", q:"Just do what it says?", b:[["Careful boundaries","simulation"]]},
+  {g:"fallback", q:"XOR, bits, digits, powers?", b:[["Identities","math"]]}
+];
+
+const STOPS = {
+"tree-dfs":{name:"Tree DFS", g:"shape", signal:"Depth, height, diameter, path sums, validating a BST, comparing subtrees. A node's answer depends on its children.",
+ anchors:[["543 Diameter of Binary Tree",1],["104 Maximum Depth",1],["98 Validate BST",1]],
+ tidbit:"Let dfs return one thing upward (the height) while it updates the real answer on the side through nonlocal. Two jobs, one pass. Same trick as Max Path Sum (124).",
+ code:`res = 0
+def dfs(node):
+    nonlocal res
+    if not node:
+        return 0
+    l = dfs(node.left)
+    r = dfs(node.right)
+    # the bent path through this node updates the answer
+    res = max(res, l + r)
+    # only the straight path can go upward
+    return 1 + max(l, r)`,
+ trap:"Kth Smallest in a BST (230) says kth, but the tree rung fires first. Inorder DFS visits a BST in sorted order, so stop at the kth node."},
+"tree-bfs":{name:"Tree BFS", g:"shape", signal:"Level by level, per-level averages, right side view, zigzag, minimum depth.",
+ anchors:[["102 Level Order Traversal",0],["637 Average of Levels",0]],
+ tidbit:"Freeze the level with for _ in range(len(q)) before you start popping. Everything popped inside that loop belongs to one level.",
+ code:`if not root:
+    return []
+q = deque([root])
+while q:
+    level = []
+    for _ in range(len(q)):
+        node = q.popleft()
+        level.append(node.val)
+        if node.left:
+            q.append(node.left)
+        if node.right:
+            q.append(node.right)
+    res.append(level)`,
+ trap:"Minimum depth is a BFS question. DFS also works, but it has to explore the whole tree before it can be sure."},
+"topo":{name:"Topological sort", g:"shape", signal:"Prerequisites, dependencies, build order, \u201ccan all courses be finished\u201d. Directed edges that impose an order.",
+ anchors:[["207 Course Schedule",1],["210 Course Schedule II",1]],
+ tidbit:"Three states: unvisited, visiting, visited. Reaching a node that is still visiting means a cycle, so the courses cannot all be finished.",
+ code:`states = [UNVISITED] * n
+def dfs(i):
+    if states[i] == VISITED:
+        return True
+    if states[i] == VISITING:
+        # back edge, so there is a cycle
+        return False
+    states[i] = VISITING
+    for nei in g[i]:
+        if not dfs(nei):
+            return False
+    states[i] = VISITED
+    return True`,
+ trap:"For the actual order (210), append each node when it turns VISITED. With edges built as g[course].append(prereq), that list is already a valid order. If you build the edges the other way, reverse it at the end."},
+"bfs":{name:"BFS shortest path", g:"shape", signal:"Fewest steps, minimum minutes, nearest cell, spreading. Every edge costs the same.",
+ anchors:[["994 Rotting Oranges",1],["127 Word Ladder",0]],
+ tidbit:"Multi-source BFS: put every starting cell in the queue before the loop. Each level of the queue is one minute.",
+ code:`q = deque(all_rotten_cells)
+minutes = 0
+while q and fresh > 0:
+    minutes += 1
+    for _ in range(len(q)):
+        i, j = q.popleft()
+        for r, c in neighbors(i, j):
+            if grid[r][c] == 1:
+                # mark on push, not on pop
+                grid[r][c] = 2
+                fresh -= 1
+                q.append((r, c))`,
+ trap:"The moment edges have different costs, BFS gives wrong answers. That is Dijkstra."},
+"dijkstra":{name:"Dijkstra", g:"shape", signal:"Weighted edges, cheapest path, minimum time for a signal to reach every node.",
+ anchors:[["743 Network Delay Time",1]],
+ tidbit:"Heap of (distance, node). The first time a node is popped, its distance is final, so skip it if it is already in min_times.",
+ code:`min_times = {}
+min_heap = [(0, k)]
+while min_heap:
+    t, i = heapq.heappop(min_heap)
+    if i in min_times:
+        continue
+    min_times[i] = t
+    for nei, w in g[i]:
+        if nei not in min_times:
+            heapq.heappush(min_heap, (t + w, nei))`,
+ trap:"Cheapest Flights Within K Stops (787) adds a stop limit, which breaks plain Dijkstra. That one is a Bellman-Ford style relaxation."},
+"connectivity":{name:"Flood fill or DSU", g:"shape", signal:"Count islands or components, does a path exist, which edge is redundant, connect all points cheaply.",
+ anchors:[["200 Number of Islands",1],["1971 Path Exists in Graph",1],["1584 Min Cost to Connect All Points",1],["684 Redundant Connection",0]],
+ tidbit:"Sink the cell before you recurse, or the recursion loops forever. Make the four direction calls as separate lines, never chained with or. Reach for DSU when edges arrive one at a time and you keep asking \u201csame group?\u201d.",
+ code:`def dfs(i, j):
+    if i < 0 or i >= m or j < 0 or j >= n or grid[i][j] != "1":
+        return
+    # sink before recursing
+    grid[i][j] = "0"
+    dfs(i + 1, j)
+    dfs(i - 1, j)
+    dfs(i, j + 1)
+    dfs(i, j - 1)`,
+ trap:"Min Cost to Connect All Points is connectivity with weights: a minimum spanning tree (Prim's with a heap, or Kruskal with DSU). It is not a shortest path problem."},
+"ll":{name:"Linked list pointers", g:"shape", signal:"Middle, cycle, nth from the end, reverse, reorder, merge two lists.",
+ anchors:[["876 Middle of the Linked List",1],["206 Reverse Linked List",1],["141 Linked List Cycle",1],["19 Remove Nth Node From End",0]],
+ tidbit:"Fast moves two, slow moves one: when fast falls off, slow is at the middle. For nth from the end, give fast an n-step head start. Use a dummy node whenever the head itself might change.",
+ code:`prev = None
+cur = head
+while cur:
+    nxt = cur.next
+    cur.next = prev
+    prev = cur
+    cur = nxt
+return prev`,
+ trap:"Merge k Sorted Lists is not a pointer problem. It is a heap holding the current head of each list."},
+"intervals":{name:"Sort and scan intervals", g:"shape", signal:"Meetings, ranges with a start and an end, merge, insert, overlap, minimum rooms.",
+ anchors:[["56 Merge Intervals",0],["253 Meeting Rooms II",1]],
+ tidbit:"Sort by start. Two intervals overlap when the new start is less than or equal to the last end. Then extend the last end with max, never overwrite it.",
+ code:`intervals.sort(key=lambda x: x[0])
+merged = []
+for s, e in intervals:
+    if merged and s <= merged[-1][1]:
+        merged[-1][1] = max(merged[-1][1], e)
+    else:
+        merged.append([s, e])`,
+ trap:"Rooms needed at the same time (253) still sorts by start, but then keeps a min-heap of end times."},
+"binary-search":{name:"Binary search", g:"promise", signal:"Sorted array plus find a target or a boundary. Or: smallest speed, capacity or days such that it works, where if x works, every bigger x works too.",
+ anchors:[["875 Koko Eating Bananas",0],["704 Binary Search",0],["153 Find Minimum in Rotated Sorted Array",0]],
+ tidbit:"Binary search on the answer: you are not searching the array, you are searching the range of possible answers with a yes or no check.",
+ code:`l = 1
+r = max(piles)
+while l < r:
+    m = (l + r) // 2
+    if works(m):
+        # m works, so the answer is m or smaller
+        r = m
+    else:
+        l = m + 1
+return l`,
+ trap:"Sorted does not mean binary search. Two Sum II, Squares of a Sorted Array, Merge Sorted Array and Missing Ranges are all sorted, and none of them is binary search."},
+"backtracking":{name:"Backtracking", g:"promise", signal:"Generate all subsets, permutations or combinations, partition a string every way, search a word on a board. Small n.",
+ anchors:[["78 Subsets",0],["46 Permutations",0],["39 Combination Sum",0],["79 Word Search",0]],
+ tidbit:"Choose, recurse, un-choose. Append a copy sol[:] to the answer, never sol itself, or every saved answer ends up empty.",
+ code:`ans, sol = [], []
+def backtrack(i):
+    if i == n:
+        ans.append(sol[:])
+        return
+    # skip nums[i]
+    backtrack(i + 1)
+    # take nums[i]
+    sol.append(nums[i])
+    backtrack(i + 1)
+    sol.pop()
+backtrack(0)`,
+ trap:"Combination Sum has \u201csum\u201d in its name but asks for every combination. That is backtracking, not prefix sums."},
+"heap":{name:"Heap", g:"ask", signal:"Kth largest, top k frequent, k closest, always process the biggest next, merge k sorted things.",
+ anchors:[["215 Kth Largest Element",0],["347 Top K Frequent",0],["973 K Closest Points",0],["621 Task Scheduler",1]],
+ tidbit:"Keep a min-heap of size k. Once it is full, push-pop each new number. The root is then the kth largest. heapq is a min-heap, so negate values when you need a max-heap.",
+ code:`min_heap = []
+for num in nums:
+    if len(min_heap) < k:
+        heapq.heappush(min_heap, num)
+    else:
+        heapq.heappushpop(min_heap, num)
+return min_heap[0]`,
+ trap:"Kth Smallest in a BST is a tree problem first, so it is inorder DFS, not a heap."},
+"hash":{name:"Hash map or set", g:"ask", signal:"Have I seen this, how many times, which group does it belong to, find the complement.",
+ anchors:[["1 Two Sum",1],["242 Valid Anagram",1],["49 Group Anagrams",0],["128 Longest Consecutive Sequence",0]],
+ tidbit:"Two Sum: check for the complement before inserting the current number, so a number never pairs with itself. Group Anagrams: the key is tuple(counts) built with ord(c) - ord(\"a\").",
+ code:`seen = {}
+for i, x in enumerate(nums):
+    if target - x in seen:
+        return [seen[target - x], i]
+    seen[x] = i`,
+ trap:"Longest Consecutive Sequence uses a set, and you only start counting from a number whose x - 1 is missing. Skipping that check makes it O(n\u00b2)."},
+"two-pointers":{name:"Two pointers", g:"ask", signal:"Pairs in a sorted array, squeeze from both ends, merge two sorted arrays, partition or compact in place.",
+ anchors:[["88 Merge Sorted Array",0],["167 Two Sum II",0],["11 Container With Most Water",0],["15 3Sum",0],["75 Sort Colors",0]],
+ tidbit:"Container: move the shorter wall, because moving the taller one can never help. Merge Sorted Array: fill from the back so nothing gets overwritten.",
+ code:`l = 0
+r = len(nums) - 1
+while l < r:
+    s = nums[l] + nums[r]
+    if s == target:
+        return [l + 1, r + 1]
+    elif s < target:
+        l += 1
+    else:
+        r -= 1`,
+ trap:"3Sum: sort, fix one number, then run this loop on the rest. The \u201csum\u201d in the name does not mean prefix sums."},
+"sliding-window":{name:"Sliding window", g:"ask", signal:"Longest or shortest contiguous stretch that satisfies a condition. At most k changes, no repeats, contains a permutation.",
+ anchors:[["3 Longest Substring Without Repeating",0],["424 Longest Repeating Character Replacement",0],["567 Permutation in String",0],["209 Minimum Size Subarray Sum",0]],
+ tidbit:"Always extend r. While the window is invalid, shrink l. Record the answer after the while loop, once the window is valid again.",
+ code:`l = 0
+seen = set()
+longest = 0
+for r in range(len(s)):
+    while s[r] in seen:
+        seen.remove(s[l])
+        l += 1
+    seen.add(s[r])
+    longest = max(longest, r - l + 1)`,
+ trap:"A window only works if shrinking it moves you toward valid. With negative numbers that breaks, and you need prefix sums plus a hash map instead."},
+"prefix":{name:"Prefix sums", g:"ask", signal:"Sum or product over a contiguous range, many range queries, everything except me.",
+ anchors:[["238 Product of Array Except Self",0],["1480 Running Sum of 1d Array",0]],
+ tidbit:"Build running totals once, then any range sum is P[r + 1] - P[l] in O(1). Product Except Self is the same idea, with a left pass and a right pass.",
+ code:`P = [0]
+for x in nums:
+    P.append(P[-1] + x)
+# sum of nums[l..r], inclusive
+total = P[r + 1] - P[l]`,
+ trap:"If the sum is not over a contiguous range (Coin Change, 3Sum, Combination Sum), prefix sums is the wrong tool."},
+"mono-stack":{name:"Monotonic stack", g:"ask", signal:"Next greater, next smaller, days until warmer, how far each bar can extend.",
+ anchors:[["739 Daily Temperatures",0],["84 Largest Rectangle in Histogram",0]],
+ tidbit:"The stack holds indices still waiting for their answer. When today beats the top, the top's answer is today: pop it and fill it in.",
+ code:`stk = []
+answer = [0] * n
+for i, t in enumerate(temps):
+    while stk and stk[-1][0] < t:
+        stk_t, stk_i = stk.pop()
+        answer[stk_i] = i - stk_i
+    stk.append((t, i))`,
+ trap:"Largest Rectangle in Histogram is the same stack, but you pop when the current bar is shorter, not taller."},
+"trie":{name:"Trie", g:"ask", signal:"Insert words, search words, starts with, many words sharing prefixes.",
+ anchors:[["208 Implement Trie",0],["211 Add and Search Words",0]],
+ tidbit:"Each node is a dict of children plus an end-of-word flag. startsWith is search without checking the flag.",
+ code:`class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end = False
+
+def insert(self, word):
+    node = self.root
+    for c in word:
+        if c not in node.children:
+            node.children[c] = TrieNode()
+        node = node.children[c]
+    node.is_end = True`,
+ trap:"Word Break (139) has a dictionary but asks whether the string can be split. That is DP over prefix positions, not a trie."},
+"dp":{name:"Dynamic programming", g:"ask", signal:"Max, min or number of ways, where today's choice depends on earlier best answers. Two strings usually means a 2-D grid.",
+ anchors:[["198 House Robber",0],["70 Climbing Stairs",0],["322 Coin Change",0],["1143 Longest Common Subsequence",0],["53 Maximum Subarray",0]],
+ tidbit:"Say dp[i] in words before writing code. House Robber: at each house, rob it (two back plus this money) or skip it (one back). Take the max.",
+ code:`prev = 0
+cur = 0
+for x in nums:
+    # rob this house or skip it
+    new = max(cur, prev + x)
+    prev = cur
+    cur = new
+return cur`,
+ trap:"Maximum Subarray is contiguous, but nothing ever makes a window invalid, so it is Kadane (DP), not sliding window."},
+"greedy":{name:"Greedy", g:"ask", signal:"Can you reach the end, where to start, minimum jumps, when the best local move is always safe.",
+ anchors:[["134 Gas Station",1],["55 Jump Game",0],["45 Jump Game II",0]],
+ tidbit:"Gas Station: if the tank goes negative at i, no start between the old start and i can work, so jump the start to i + 1. Jump Game: walk backward and pull the goal toward index 0.",
+ code:`goal = len(nums) - 1
+for i in range(len(nums) - 2, -1, -1):
+    if i + nums[i] >= goal:
+        goal = i
+return goal == 0`,
+ trap:"Find one counterexample where the locally best move loses, and it is DP. Coin Change with coins [1, 3, 4] and amount 6 kills greedy: 4 + 1 + 1 versus 3 + 3."},
+"stack":{name:"Stack", g:"fallback", signal:"Brackets, nesting, evaluate expressions, undo the most recent thing.",
+ anchors:[["20 Valid Parentheses",0],["150 Evaluate Reverse Polish Notation",0]],
+ tidbit:"Push openers. Every closer must match the top. The string is valid only if the stack is empty at the end.",
+ code:`pairs = {")": "(", "]": "[", "}": "{"}
+stk = []
+for c in s:
+    if c in pairs:
+        if not stk or stk[-1] != pairs[c]:
+            return False
+        stk.pop()
+    else:
+        stk.append(c)
+return not stk`,
+ trap:"Generate Parentheses (22) builds strings, so it is backtracking with open and close counts, not a stack."},
+"design":{name:"Design", g:"fallback", signal:"Implement a class where every operation must be O(1) or O(log n).",
+ anchors:[["155 Min Stack",0],["146 LRU Cache",0]],
+ tidbit:"Min Stack keeps a second stack holding the minimum so far. LRU is a dict for O(1) lookup plus a doubly linked list for O(1) move to front.",
+ code:`def push(self, val):
+    self.stk.append(val)
+    if not self.min_stk:
+        self.min_stk.append(val)
+    else:
+        self.min_stk.append(min(val, self.min_stk[-1]))`,
+ trap:"OrderedDict makes LRU trivial in Python. Know it, but expect to be asked for the linked list version."},
+"simulation":{name:"Simulation", g:"fallback", signal:"The statement already tells you the steps. Spiral walk, line wrapping, gaps in a range.",
+ anchors:[["54 Spiral Matrix",0],["163 Missing Ranges",0],["806 Number of Lines",0]],
+ tidbit:"There is no trick. The points are lost in the boundaries: inclusive or exclusive, > or >=, and the empty input.",
+ code:`prev = lower - 1
+for num in nums:
+    if num - prev > 1:
+        ans.append([prev + 1, num - 1])
+    prev = num
+if prev < upper:
+    ans.append([prev + 1, upper])`,
+ trap:"Missing Ranges has sorted input and is still simulation. The sorted rung only fires when you are searching."},
+"math":{name:"Math and bits", g:"fallback", signal:"XOR, count bits, powers of two, digit manipulation, number bases.",
+ anchors:[["136 Single Number",0],["191 Number of 1 Bits",0],["268 Missing Number",0]],
+ tidbit:"x ^ x is 0 and x ^ 0 is x, so XOR everything and the pairs cancel out. n & (n - 1) removes the lowest set bit.",
+ code:`ans = 0
+for x in nums:
+    ans ^= x
+return ans`,
+ trap:"Missing Number (268) is the same XOR trick, with the indices 0 to n mixed in."}
+};
+
+// [lc, name, stop, path, why, solved, trap, lure]
+const DRILL = [
+ [543,"Diameter of Binary Tree","tree-dfs","Tree? Yes. Levels matter? No.","Height comes up from the children, and the diameter is updated on the side.",1],
+ [104,"Maximum Depth of Binary Tree","tree-dfs","Tree? Yes. Levels matter? No.","1 + max of the two child depths.",1],
+ [98,"Validate Binary Search Tree","tree-dfs","Tree? Yes. Levels matter? No.","Pass (low, high) bounds down the recursion.",1],
+ [230,"Kth Smallest Element in a BST","tree-dfs","Tree? Yes. That fires before the kth rung.","Inorder DFS visits a BST in sorted order. Stop at the kth node.",0,1,"heap"],
+ [102,"Binary Tree Level Order Traversal","tree-bfs","Tree? Yes. Levels matter? Yes.","Freeze each level with for _ in range(len(q)).",0],
+ [637,"Average of Levels in Binary Tree","tree-bfs","Tree? Yes. Levels matter? Yes.","Same level loop, then sum over count.",0],
+ [207,"Course Schedule","topo","Graph? Yes. Dependencies? Yes.","A cycle means the courses cannot all be finished.",1],
+ [210,"Course Schedule II","topo","Graph? Yes. Dependencies? Yes.","Same cycle check, plus record the finish order.",1],
+ [994,"Rotting Oranges","bfs","Grid? Yes. Fewest minutes with equal costs.","Multi-source BFS, one queue level per minute.",1],
+ [743,"Network Delay Time","dijkstra","Graph? Yes. Fewest time with weighted edges.","Heap of (time, node), answer is the max of the final times.",1],
+ [200,"Number of Islands","connectivity","Grid? Yes. Counting groups.","Flood fill each unvisited land cell, sinking as you go.",1],
+ [695,"Max Area of Island","connectivity","Grid? Yes. Groups with a size.","Flood fill that returns the area.",1],
+ [1971,"Find if Path Exists in Graph","connectivity","Graph? Yes. Are two nodes connected?","DFS from source, mark visited on push.",1],
+ [1584,"Min Cost to Connect All Points","connectivity","Graph? Yes. Connect everything cheaply.","That is a minimum spanning tree, not a shortest path. Prim's with a heap.",1,1,"dijkstra"],
+ [684,"Redundant Connection","connectivity","Graph? Yes. Edges arrive one at a time.","Union edges one by one. The first edge whose ends already share a root is redundant.",0],
+ [79,"Word Search","backtracking","Grid? Yes. Try every path on a small board.","Mark the cell, recurse in four directions, unmark it.",0],
+ [704,"Binary Search","binary-search","Sorted? Yes. Searching one target.","The textbook case.",0],
+ [875,"Koko Eating Bananas","binary-search","Not sorted, but the answer is monotonic: if speed k works, k + 1 works.","Binary search on the speed with a yes or no check.",0,1,"greedy"],
+ [153,"Find Minimum in Rotated Sorted Array","binary-search","Sorted (rotated)? Yes. Searching a boundary.","Compare the middle with the right end to pick a half.",0],
+ [167,"Two Sum II","two-pointers","Sorted? Yes. Searching one target? No, you want a pair.","Squeeze from both ends: too small moves l, too big moves r.",0,1,"binary-search"],
+ [15,"3Sum","two-pointers","Not a range sum. Sort, then pairs from both ends.","Fix one number and run the Two Sum II loop on the rest.",0,1,"prefix"],
+ [11,"Container With Most Water","two-pointers","Pair from both ends.","Move the shorter wall.",0],
+ [75,"Sort Colors","two-pointers","Partition in place.","Three pointers: low, mid, high.",0],
+ [88,"Merge Sorted Array","two-pointers","Sorted? Yes. Merging, not searching.","Fill nums1 from the back.",0,1,"binary-search"],
+ [215,"Kth Largest Element in an Array","heap","Kth? Yes.","Min-heap of size k, the root is the answer.",0],
+ [347,"Top K Frequent Elements","heap","Top k? Yes.","Count with a dict, then a heap of size k (or bucket sort).",0],
+ [973,"K Closest Points to Origin","heap","K closest? Yes.","Heap keyed by squared distance.",0],
+ [621,"Task Scheduler","heap","Always run the most frequent task next.","Max-heap of counts plus a cooldown queue.",1],
+ [876,"Middle of the Linked List","ll","Linked list? Yes. Middle.","Fast moves two, slow moves one.",1],
+ [141,"Linked List Cycle","ll","Linked list? Yes. Cycle.","If fast ever meets slow, there is a cycle.",1],
+ [19,"Remove Nth Node From End of List","ll","Linked list? Yes. Fixed gap.","Give fast an n-step head start, use a dummy node.",0],
+ [206,"Reverse Linked List","ll","Linked list? Yes. Rewire.","Save next, flip, advance prev and cur.",1],
+ [23,"Merge k Sorted Lists","heap","Linked list? Yes. But merging k of them.","A heap of the k current heads, not pointer tricks.",0,1,"ll"],
+ [1,"Two Sum","hash","Find the complement.","Check target - x in seen before inserting x.",1],
+ [49,"Group Anagrams","hash","Group it.","Key is tuple of 26 counts.",0],
+ [217,"Contains Duplicate","hash","Seen it before?","Set membership.",1],
+ [128,"Longest Consecutive Sequence","hash","Seen it before, in O(n).","Set, and only start counting where x - 1 is missing.",0,1,"sliding-window"],
+ [56,"Merge Intervals","intervals","Start and end ranges.","Sort by start, extend the last end with max.",0],
+ [253,"Meeting Rooms II","intervals","Start and end ranges, count overlaps.","Sort by start, min-heap of end times.",1],
+ [3,"Longest Substring Without Repeating Characters","sliding-window","Contiguous? Yes. Window must stay valid.","Shrink l while s[r] is already in the window.",0],
+ [424,"Longest Repeating Character Replacement","sliding-window","Contiguous? Yes. At most k changes.","Window length minus the top count must stay at most k.",0],
+ [567,"Permutation in String","sliding-window","Contiguous? Yes. Fixed length window.","Slide a window of len(s1), compare two 26-slot count arrays.",0],
+ [238,"Product of Array Except Self","prefix","Everything except me, over the array.","Left products pass, then right products pass.",0],
+ [1480,"Running Sum of 1d Array","prefix","Running total.","The prefix array itself is the answer.",0],
+ [739,"Daily Temperatures","mono-stack","Next warmer day.","Stack of days still waiting for an answer.",0],
+ [84,"Largest Rectangle in Histogram","mono-stack","How far each bar extends before a shorter one.","Pop when the current bar is shorter.",0],
+ [53,"Maximum Subarray","dp","Contiguous, but nothing ever makes a window invalid.","Kadane: drop the running sum once it goes negative.",0,1,"sliding-window"],
+ [208,"Implement Trie (Prefix Tree)","trie","Words plus prefix lookups.","Node is a dict of children plus an end flag.",0],
+ [139,"Word Break","dp","Words plus a dictionary, but the question is whether it can be split.","dp[i] is true if some word ends at i and dp[i - len(word)] is true.",0,1,"trie"],
+ [78,"Subsets","backtracking","All combinations.","Skip or take each number.",0],
+ [46,"Permutations","backtracking","All orderings.","Pick any unused number at each level.",0],
+ [39,"Combination Sum","backtracking","All combinations, despite the word sum.","Take the same number again or move to the next.",0,1,"prefix"],
+ [22,"Generate Parentheses","backtracking","Build every valid string.","Add an open if open < n, a close if close < open.",0,1,"stack"],
+ [70,"Climbing Stairs","dp","Number of ways.","ways(n) = ways(n - 1) + ways(n - 2).",0],
+ [198,"House Robber","dp","Max value with a constraint between neighbors.","Rob this house or skip it.",0],
+ [322,"Coin Change","dp","Min count, and greedy can lose.","Coins [1, 3, 4] for 6: greedy says 3 coins, the answer is 2.",0,1,"greedy"],
+ [1143,"Longest Common Subsequence","dp","Two strings, best value.","2-D grid over both strings.",0],
+ [55,"Jump Game","greedy","Can you reach the end?","Walk backward and pull the goal toward 0.",0],
+ [134,"Gas Station","greedy","Where to start.","If the tank goes negative at i, restart at i + 1.",1],
+ [20,"Valid Parentheses","stack","Matching symbols.","Push openers, closers must match the top.",0],
+ [150,"Evaluate Reverse Polish Notation","stack","Evaluate an expression.","Push numbers, an operator pops two.",0],
+ [155,"Min Stack","design","Implement a class with O(1) getMin.","A second stack of the minimum so far.",0],
+ [146,"LRU Cache","design","Implement a class with O(1) get and put.","Dict plus doubly linked list.",0],
+ [54,"Spiral Matrix","simulation","Just walk it.","Shrink four boundaries after each side.",0],
+ [163,"Missing Ranges","simulation","Sorted, but nothing is being searched.","Walk with prev starting at lower - 1.",0,1,"binary-search"],
+ [806,"Number of Lines To Write String","simulation","Just do what it says.","Start a new line when the next letter does not fit.",0],
+ [136,"Single Number","math","XOR identity.","Pairs cancel, the single one is left.",0],
+ [191,"Number of 1 Bits","math","Count bits.","n & (n - 1) drops one set bit per step.",0],
+ [572, "Subtree of Another Tree", "tree-dfs", "Tree? Yes. Levels matter? No.", "At every node, run Same Tree against the subtree.", 1],
+ [124, "Binary Tree Maximum Path Sum", "tree-dfs", "Tree? Yes. Levels matter? No.", "Return the best one-branch gain upward, clip negatives to 0, update the bent path on the side.", 1],
+ [647, "Palindromic Substrings", "dp", "Substring, counting, with overlapping checks.", "Expand around all 2n - 1 centers. The DP table works too, but expand is the interview answer.", 1],
+ [252, "Meeting Rooms", "intervals", "Start and end ranges.", "Sort by start; any start before the previous end is a clash.", 1],
+ [133, "Clone Graph", "connectivity", "Graph? Yes. Visit every node once.", "DFS with an old-to-new dict that is both the memo and the visited set.", 1],
+ [417, "Pacific Atlantic Water Flow", "connectivity", "Grid? Yes. Which cells reach both groups.", "Flood fill inward from each ocean border, answer is the intersection.", 1],
+ [242, "Valid Anagram", "hash", "Count it.", "26-slot count array or Counter, then compare.", 1],
+ [100, "Same Tree", "tree-dfs", "Tree? Yes. Compare subtrees.", "Both None is True, one None is False, then values and both children.", 1],
+ [101, "Symmetric Tree", "tree-dfs", "Tree? Yes. Compare subtrees.", "Mirror check: left.left with right.right, left.right with right.left.", 1],
+ [589, "N-ary Tree Preorder Traversal", "tree-dfs", "Tree? Yes. Levels matter? No.", "Visit the node, then recurse into each child in order.", 1],
+ [25, "Reverse Nodes in k-Group", "ll", "Linked list? Yes. Rewire.", "Dummy node plus a group-prev pointer; reverse k at a time, leave a short tail alone.", 0],
+ [297, "Serialize and Deserialize Binary Tree", "tree-dfs", "Tree? Yes.", "Preorder with null markers; rebuild with an iterator in the same order.", 0],
+ [211, "Design Add and Search Words", "trie", "Words plus prefix lookups.", "Trie, and on a dot recurse into every child.", 0],
+ [212, "Word Search II", "trie", "Grid search, but against a whole dictionary.", "Backtracking on the board, driven by a trie of all the words so one DFS checks them all.", 0, 1, "backtracking"],
+ [703, "Kth Largest Element in a Stream", "heap", "Kth? Yes.", "Min-heap of size k, the root is the answer after each add.", 0],
+ [355, "Design Twitter", "heap", "A class, but the core is the 10 most recent across many feeds.", "Merge the followed users' tweet lists by time with a heap.", 0, 1, "design"],
+ [90, "Subsets II", "backtracking", "All subsets, with duplicates.", "Sort first; when you skip nums[i], skip every copy of it.", 0],
+ [40, "Combination Sum II", "backtracking", "All combinations, each number once.", "Sort, and skip duplicates at the same depth.", 0],
+ [131, "Palindrome Partitioning", "backtracking", "Every way to cut the string.", "Cut at each palindromic prefix and recurse on the rest.", 0],
+ [169, "Majority Element", "hash", "Count it.", "Counting works; Boyer-Moore voting does it in O(1) space.", 1],
+ [771, "Jewels and Stones", "hash", "Seen it before?", "Put jewels in a set, count stones in it.", 0],
+ [383, "Ransom Note", "hash", "Count it.", "26-slot counts from the magazine, fail when a note letter goes negative.", 0],
+ [1189, "Maximum Number of Balloons", "hash", "Count it.", "Count letters; l and o need two each; answer is the min ratio.", 0],
+ [228, "Summary Ranges", "simulation", "Sorted, but nothing is being searched.", "Walk and close a range when the next number is not current + 1.", 0, 1, "binary-search"],
+ [2239, "Find Closest Number to Zero", "simulation", "Just do what it says.", "One pass on abs values, ties go to the positive number.", 0],
+ [14, "Longest Common Prefix", "simulation", "Just do what it says.", "Compare column by column across all strings, stop at the first mismatch. A trie is overkill.", 0, 1, "trie"],
+ [13, "Roman to Integer", "simulation", "Just do what it says.", "Map symbol values; subtract when a smaller value comes before a bigger one.", 0],
+ [36, "Valid Sudoku", "hash", "Seen it before, per row, column and box.", "Sets per row, column and box; the box key is (i // 3, j // 3).", 0],
+ [6, "Zigzag Conversion", "simulation", "Just do what it says.", "One string per row, bounce the row index between 0 and numRows - 1.", 0],
+ [274, "H-Index", "hash", "Count it.", "Bucket papers by citations capped at n, then scan from high to low accumulating.", 0],
+ [125, "Valid Palindrome", "two-pointers", "Pair from both ends.", "Skip non-alphanumerics, compare lowercase from both ends.", 0],
+ [16, "3Sum Closest", "two-pointers", "Sort, then pairs from both ends.", "Same as 3Sum, track the closest sum instead of exact hits.", 0],
+ [18, "4Sum", "two-pointers", "Sort, then pairs from both ends.", "Two fixed loops, then the two-pointer squeeze.", 0],
+ [42, "Trapping Rain Water", "two-pointers", "Pair from both ends.", "Water at i is min(max left, max right) minus height; move the side with the smaller max.", 0],
+ [27, "Remove Element", "two-pointers", "Compact in place.", "A write pointer that only advances on kept values.", 0],
+ [26, "Remove Duplicates from Sorted Array", "two-pointers", "Sorted, but compacting, not searching.", "Write pointer advances when the value differs from the last written one.", 0, 1, "binary-search"],
+ [80, "Remove Duplicates from Sorted Array II", "two-pointers", "Compact in place.", "Keep a value if it differs from nums[w - 2].", 0],
+ [977, "Squares of a Sorted Array", "two-pointers", "Sorted, but merging, not searching.", "Biggest squares are at the ends; fill the result from the back.", 0, 1, "binary-search"],
+ [344, "Reverse String", "two-pointers", "Pair from both ends.", "Swap s[l] and s[r], move both inward.", 0],
+ [392, "Is Subsequence", "two-pointers", "Two sequences walked together.", "One pointer per string, advance the s pointer only on a match.", 0],
+ [1768, "Merge Strings Alternately", "two-pointers", "Two sequences walked together.", "Alternate characters, then append the leftover tail.", 0],
+ [121, "Best Time to Buy and Sell Stock", "sliding-window", "Contiguous span, best value.", "Track the cheapest day so far and the best sale after it. It is really a running minimum.", 0],
+ [209, "Minimum Size Subarray Sum", "sliding-window", "Contiguous, and all numbers are positive.", "Positive numbers mean shrinking only lowers the sum, so a window works.", 0, 1, "prefix"],
+ [643, "Maximum Average Subarray I", "sliding-window", "Contiguous, fixed length.", "Add the new right value, subtract the one leaving on the left.", 0],
+ [1004, "Max Consecutive Ones III", "sliding-window", "Contiguous, at most k flips.", "Shrink while the window holds more than k zeros.", 0],
+ [682, "Baseball Game", "stack", "Undo the most recent thing.", "Push scores; C pops, D doubles the top, + adds the top two.", 0],
+ [35, "Search Insert Position", "binary-search", "Sorted? Yes. Searching a boundary.", "Return l at the end, it is the insert point.", 0],
+ [74, "Search a 2D Matrix", "binary-search", "Sorted? Yes. Searching one target.", "Treat it as one sorted array: row = m // cols, col = m % cols.", 0],
+ [33, "Search in Rotated Sorted Array", "binary-search", "Sorted (rotated)? Yes. Searching one target.", "One half is always sorted; check if the target is in that half.", 0],
+ [278, "First Bad Version", "binary-search", "Monotonic yes or no. Searching a boundary.", "If m is bad, the answer is m or earlier.", 0],
+ [367, "Valid Perfect Square", "binary-search", "Monotonic answer.", "Binary search for m with m * m == num, no sqrt allowed.", 0, 1, "math"],
+ [21, "Merge Two Sorted Lists", "ll", "Linked list? Yes. Merge two.", "Dummy node, attach the smaller head each step, then the leftover.", 1],
+ [83, "Remove Duplicates from Sorted List", "ll", "Linked list? Yes. Rewire.", "If next has the same value, skip it; otherwise advance.", 1],
+ [138, "Copy List with Random Pointer", "hash", "Linked list, but the hard part is mapping old to new.", "Dict from old node to new node, then a second pass wires next and random.", 0, 1, "ll"],
+ [2807, "Insert GCDs in Linked List", "ll", "Linked list? Yes. Rewire.", "Between each pair, insert a node with gcd of the two values.", 0],
+ [226, "Invert Binary Tree", "tree-dfs", "Tree? Yes.", "Swap the children, recurse on both.", 1],
+ [110, "Balanced Binary Tree", "tree-dfs", "Tree? Yes.", "Return height, or -1 as an unbalanced signal that propagates up.", 1],
+ [112, "Path Sum", "tree-dfs", "Tree? Yes.", "Carry the running sum down, check it at leaves only.", 1],
+ [1448, "Count Good Nodes in Binary Tree", "tree-dfs", "Tree? Yes.", "Carry the max seen on the path down.", 0],
+ [2265, "Count Nodes Equal to Average of Subtree", "tree-dfs", "Tree? Yes.", "Return (sum, count) upward, compare at each node.", 0],
+ [429, "N-ary Tree Level Order Traversal", "tree-bfs", "Tree? Yes. Levels matter? Yes.", "Same level loop, push every child.", 0],
+ [235, "Lowest Common Ancestor of a BST", "tree-dfs", "Tree? Yes.", "Both smaller go left, both bigger go right, otherwise this node is the split.", 0],
+ [530, "Minimum Absolute Difference in BST", "tree-dfs", "Tree? Yes.", "Inorder gives sorted order; compare each value with the previous one.", 0],
+ [1046, "Last Stone Weight", "heap", "Always take the biggest two.", "Max-heap by negating values.", 0],
+ [77, "Combinations", "backtracking", "All combinations of size k.", "Pick from i onward, stop at size k.", 0],
+ [17, "Letter Combinations of a Phone Number", "backtracking", "All combinations.", "One digit per level, try each of its letters.", 0],
+ [509, "Fibonacci Number", "dp", "Overlapping subproblems.", "Two variables rolling forward.", 0],
+ [746, "Min Cost Climbing Stairs", "dp", "Min cost with choices.", "cost to reach i is cost[i] plus the cheaper of the two before it.", 0],
+ [300, "Longest Increasing Subsequence", "dp", "Best value, not contiguous.", "dp[i] = 1 + max dp[j] for j < i with nums[j] < nums[i].", 0],
+ [62, "Unique Paths", "dp", "Number of ways on a grid.", "Ways to a cell = ways from above + ways from the left.", 0],
+ [45, "Jump Game II", "greedy", "Minimum jumps.", "BFS by ranges: each jump covers [l, r], the next r is the farthest reach.", 0],
+ [122, "Best Time to Buy and Sell Stock II", "greedy", "Local choice never regretted.", "Take every upward step.", 0],
+ [48, "Rotate Image", "simulation", "Just do it on the matrix.", "Transpose, then reverse each row.", 0],
+ [67, "Add Binary", "math", "Digits.", "Add from the right with a carry, digit value is ord(c) - ord of zero.", 0],
+ [504, "Base 7", "math", "Number bases.", "Repeated divmod by 7, handle the sign separately.", 0],
+ [201, "Bitwise AND of Numbers Range", "math", "Bits.", "Shift both right until equal, then shift back: the common prefix.", 0],
+ [338, "Counting Bits", "dp", "Bits, but each answer reuses an earlier one.", "bits[i] = bits[i >> 1] + (i & 1).", 0, 1, "math"],
+ [190, "Reverse Bits", "math", "Bits.", "Take the low bit 32 times, push it onto the result.", 0],
+ [268, "Missing Number", "math", "XOR identity.", "XOR all indices and values, the missing one is left.", 0],
+ [371, "Sum of Two Integers", "math", "Bits.", "XOR is the sum without carry, AND shifted left is the carry; mask to 32 bits in Python.", 0],
+ [7, "Reverse Integer", "math", "Digits.", "Pop digits with divmod, check the 32-bit range.", 0],
+ [202, "Happy Number", "hash", "Seen it before?", "A set detects the cycle (fast and slow pointers also work).", 0],
+ [66, "Plus One", "math", "Digits.", "Walk from the right; a 9 becomes 0 and carries.", 0],
+ [73, "Set Matrix Zeroes", "simulation", "Just do it on the matrix.", "Use the first row and column as markers for O(1) space.", 0],
+ [50, "Pow(x, n)", "math", "Powers.", "Fast exponentiation: square the base, halve n.", 0],
+ [43, "Multiply Strings", "math", "Digits.", "Grade-school multiply into an array: digit i times digit j lands at i + j + 1.", 0],
+ [2013, "Detect Squares", "hash", "Count it.", "Count points; for each diagonal point, multiply the counts of the other two corners.", 0],
+ [846, "Hand of Straights", "greedy", "Local choice never regretted.", "Every group must start at the smallest remaining card.", 0],
+ [1899, "Merge Triplets to Form Target Triplet", "greedy", "Local choice never regretted.", "Drop any triplet with a value above the target, check the rest can hit each value.", 0],
+ [763, "Partition Labels", "greedy", "Local choice never regretted.", "Store each letter's last index; cut when i reaches the farthest last index so far.", 0],
+ [678, "Valid Parenthesis String", "greedy", "Symbols, but the star makes a stack messy.", "Track the range [low, high] of possible open counts.", 0, 1, "stack"],
+ [57, "Insert Interval", "intervals", "Start and end ranges.", "Add everything before, merge the overlaps, add everything after.", 0],
+ [435, "Non-overlapping Intervals", "intervals", "Start and end ranges, remove the fewest.", "Sort by end, keep the earliest ending, count the rest.", 0, 1, "greedy"],
+ [1851, "Minimum Interval to Include Each Query", "intervals", "Start and end ranges, many queries.", "Sort intervals and queries; heap of started intervals by size, pop the expired ones.", 0],
+ [271, "Encode and Decode Strings", "simulation", "Just do what it says.", "Length prefix plus a delimiter, like 4#word.", 0],
+ [76, "Minimum Window Substring", "sliding-window", "Contiguous, shortest valid window.", "Expand until valid, then shrink while still valid, recording the best.", 0],
+ [239, "Sliding Window Maximum", "sliding-window", "Fixed window, max of each.", "Monotonic deque of indices; the front is the max.", 0, 1, "heap"],
+ [853, "Car Fleet", "mono-stack", "Who catches whom ahead.", "Sort by position descending, stack arrival times; a car not slower than the fleet ahead joins it.", 0],
+ [981, "Time Based Key-Value Store", "binary-search", "Times arrive sorted, search the last one at or before t.", "Dict of key to a list of (time, value), binary search the list.", 0, 1, "design"],
+ [4, "Median of Two Sorted Arrays", "binary-search", "Sorted? Yes. Searching a partition.", "Binary search the cut in the shorter array.", 0],
+ [143, "Reorder List", "ll", "Linked list? Yes. Middle, reverse, merge.", "Find the middle, reverse the second half, merge alternately.", 0],
+ [2, "Add Two Numbers", "ll", "Linked list? Yes.", "Walk both with a carry, dummy node for the result.", 0],
+ [287, "Find the Duplicate Number", "ll", "Array, but O(1) space and values point to indices.", "Treat each value as a next pointer and run Floyd cycle detection.", 0, 1, "hash"],
+ [199, "Binary Tree Right Side View", "tree-bfs", "Tree? Yes. Levels matter? Yes.", "Last node of each level.", 0],
+ [105, "Construct Binary Tree from Preorder and Inorder", "tree-dfs", "Tree? Yes. Build by splitting.", "preorder[0] is the root; its index in inorder splits left and right.", 0],
+ [295, "Find Median from Data Stream", "heap", "Keep the middle as numbers stream in.", "Max-heap for the lower half, min-heap for the upper half, sizes within one.", 0],
+ [51, "N-Queens", "backtracking", "Small n, all placements.", "One queen per row; sets for columns and both diagonals.", 0],
+ [130, "Surrounded Regions", "connectivity", "Grid? Yes. Groups touching the border.", "Flood fill from border O cells to mark them safe, flip the rest.", 0],
+ [286, "Walls and Gates", "bfs", "Grid? Yes. Nearest gate.", "Multi-source BFS from every gate.", 0],
+ [323, "Number of Connected Components", "connectivity", "Graph? Yes. Count groups.", "DFS from each unvisited node, or DSU and count roots.", 0],
+ [261, "Graph Valid Tree", "connectivity", "Graph? Yes. Connected and no cycle.", "Exactly n - 1 edges and everything connected.", 0],
+ [127, "Word Ladder", "bfs", "Fewest steps, equal costs.", "BFS over words; neighbors differ by one letter.", 0],
+ [787, "Cheapest Flights Within K Stops", "dijkstra", "Weighted, but with a stop limit.", "Plain Dijkstra breaks; run k + 1 rounds of Bellman-Ford relaxation.", 0, 1, "bfs"],
+ [213, "House Robber II", "dp", "Max value with neighbor constraint, in a circle.", "Run House Robber twice: without the first house, and without the last.", 0],
+ [332, "Reconstruct Itinerary", "backtracking", "Use every ticket once, smallest order.", "Sort destinations and DFS; the fast version is Hierholzer post-order.", 0],
+ [778, "Swim in Rising Water", "dijkstra", "Grid, cheapest path where cost is the max on the path.", "Heap keyed by the highest elevation seen so far.", 0, 1, "bfs"],
+ [269, "Alien Dictionary", "topo", "Ordering from comparisons.", "Adjacent words give letter edges, then topological sort; a longer word before its own prefix is invalid.", 0],
+ [5, "Longest Palindromic Substring", "dp", "Substring, best value, overlapping checks.", "Expand around each center; track the longest.", 0],
+ [91, "Decode Ways", "dp", "Number of ways.", "dp[i] from one-digit and two-digit decodes; a 0 cannot stand alone.", 0],
+ [152, "Maximum Product Subarray", "dp", "Contiguous, but a negative can flip everything.", "Track both the max and the min ending here.", 0, 1, "sliding-window"],
+ [416, "Partition Equal Subset Sum", "dp", "Subset, but n is up to 200.", "Target is half the total; build the set of reachable sums.", 0, 1, "backtracking"],
+ [309, "Best Time to Buy and Sell Stock with Cooldown", "dp", "Best value with states.", "States: holding, sold, resting.", 0],
+ [518, "Coin Change II", "dp", "Number of ways.", "Loop coins outside, amounts inside, so orders are not double counted.", 0],
+ [494, "Target Sum", "dp", "Number of ways.", "Memo on (index, running total), or convert to a subset sum count.", 0, 1, "backtracking"],
+ [97, "Interleaving String", "dp", "Two strings plus a third.", "dp[i][j]: can the first i + j chars of s3 come from s1[:i] and s2[:j].", 0],
+ [329, "Longest Increasing Path in a Matrix", "dp", "Grid, but strictly increasing means no cycles.", "DFS from every cell with memo.", 0, 1, "connectivity"],
+ [115, "Distinct Subsequences", "dp", "Two strings, number of ways.", "Match or skip each char of s.", 0],
+ [72, "Edit Distance", "dp", "Two strings, min operations.", "Insert, delete or replace from the three neighbor cells.", 0],
+ [312, "Burst Balloons", "dp", "Best value over ranges.", "Interval DP: choose the last balloon to burst in (l, r).", 0],
+ [10, "Regular Expression Matching", "dp", "Two strings, best match.", "A star can match zero copies or one more copy.", 0],
+ [427, "Construct Quad Tree", "tree-dfs", "Build a tree by splitting.", "Recurse on four quadrants; a leaf when all values match.", 0],
+ [106, "Construct Binary Tree from Inorder and Postorder", "tree-dfs", "Tree? Yes. Build by splitting.", "postorder[-1] is the root; build the right subtree first.", 0],
+ [34, "Find First and Last Position", "binary-search", "Sorted? Yes. Two boundaries.", "Run binary search twice, once biased left and once biased right.", 0],
+ [63, "Unique Paths II", "dp", "Number of ways on a grid with blocks.", "Same as Unique Paths, an obstacle cell is 0 ways.", 0],
+ [64, "Minimum Path Sum", "dp", "Grid, but only right and down moves.", "No cycles, so DP beats Dijkstra here.", 0, 1, "dijkstra"],
+ [120, "Triangle", "dp", "Min path, overlapping subproblems.", "Go bottom up, each cell adds the smaller child below.", 0],
+ [108, "Convert Sorted Array to BST", "tree-dfs", "Build a tree by splitting.", "The middle element is the root, recurse on each half.", 0, 1, "binary-search"],
+ [71, "Simplify Path", "stack", "Nesting with undo.", "Split on slash; .. pops, . and empty are skipped.", 0],
+ [114, "Flatten Binary Tree to Linked List", "tree-dfs", "Tree? Yes. Rewire.", "For each node, attach the left subtree between it and its right subtree.", 0],
+ [189, "Rotate Array", "two-pointers", "In place.", "Reverse all, reverse the first k, reverse the rest, with k = k % n.", 0],
+ [399, "Evaluate Division", "connectivity", "Graph? Yes. Is there a path, with weights to multiply.", "Edge a to b with the value, b to a with its inverse; DFS multiplies along the path.", 0],
+ [12, "Integer to Roman", "greedy", "Local choice never regretted.", "Walk value-symbol pairs from largest, subtract while you can.", 0],
+ [135, "Candy", "greedy", "Two-sided constraint.", "Left pass for rising from the left, right pass for rising from the right, take the max.", 0],
+ [380, "Insert Delete GetRandom O(1)", "design", "Implement a class with O(1) ops.", "Dict of value to index plus a list; delete by swapping with the last element.", 0],
+ [58, "Length of Last Word", "simulation", "Just do what it says.", "Skip trailing spaces from the end, then count.", 0],
+ [151, "Reverse Words in a String", "simulation", "Just do what it says.", "Split on whitespace, reverse, join.", 0],
+ [289, "Game of Life", "simulation", "Just do it on the matrix, in place.", "Encode old and new state together, like 2 for was alive and now dead.", 0],
+ [28, "Find the Index of the First Occurrence", "simulation", "Just do what it says.", "Check each start position; KMP exists but slice comparison is the expected answer.", 0, 1, "trie"],
+ [68, "Text Justification", "simulation", "Just do what it says, carefully.", "Greedily pack words per line, spread spaces left first, last line left-justified.", 0],
+ [205, "Isomorphic Strings", "hash", "Mapping in both directions.", "Two dicts, one per direction.", 0],
+ [219, "Contains Duplicate II", "sliding-window", "Seen it, within k.", "A set holding the last k values (a dict of last index also works).", 0, 1, "hash"],
+ [290, "Word Pattern", "hash", "Mapping in both directions.", "Two dicts, letter to word and word to letter.", 0],
+ [82, "Remove Duplicates from Sorted List II", "ll", "Linked list? Yes. Rewire.", "Dummy node; skip the whole run of a repeated value.", 0],
+ [103, "Binary Tree Zigzag Level Order", "tree-bfs", "Tree? Yes. Levels matter? Yes.", "Level loop, reverse every other level.", 0],
+ [129, "Sum Root to Leaf Numbers", "tree-dfs", "Tree? Yes.", "Carry num * 10 + val down, add it at leaves.", 0],
+ [452, "Minimum Number of Arrows to Burst Balloons", "intervals", "Start and end ranges.", "Sort by end, shoot at the first end, skip everything it pops.", 0],
+ [173, "Binary Search Tree Iterator", "tree-dfs", "Tree first, even though it is a class.", "Iterative inorder: push the left spine, pop one, push the left spine of its right child.", 0, 1, "design"],
+ [236, "Lowest Common Ancestor of a Binary Tree", "tree-dfs", "Tree? Yes.", "If both sides return a node, this node is the LCA; otherwise pass up the non-null side.", 0],
+ [433, "Minimum Genetic Mutation", "bfs", "Fewest steps, equal costs.", "BFS over the bank, neighbors differ by one letter.", 0],
+ [30, "Substring with Concatenation of All Words", "sliding-window", "Contiguous, fixed total length.", "Slide in word-sized steps from each offset, compare word counts.", 0],
+ [117, "Populating Next Right Pointers II", "tree-bfs", "Tree? Yes. Levels matter? Yes.", "Link nodes level by level.", 0],
+ [148, "Sort List", "ll", "Linked list? Yes.", "Merge sort: split at the middle with fast and slow, sort halves, merge.", 0],
+ [162, "Find Peak Element", "binary-search", "Not sorted, but there is a direction to move.", "If nums[m] < nums[m + 1], a peak is to the right.", 0, 1, "simulation"],
+ [909, "Snakes and Ladders", "bfs", "Fewest moves, equal costs.", "BFS over squares; map the square number to a board cell carefully.", 0],
+ [52, "N-Queens II", "backtracking", "Small n, all placements, count only.", "Same as N-Queens, count instead of building boards.", 0]
+];
+
+const $ = (s, el=document) => el.querySelector(s);
+const gColor = id => GROUPS.find(g => g.id === id).c;
+const STORE = "pattern-ladder-v1";
+let state = {missed:[], seen:0, right:0};
+try { const raw = localStorage.getItem(STORE); if (raw) state = Object.assign(state, JSON.parse(raw)); } catch (e) {}
+function save(){ try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {} }
+function esc(t){ return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* Tabs */
+document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x === b));
+  document.querySelectorAll(".view").forEach(v => v.hidden = v.id !== "view-" + b.dataset.view);
+  if (b.dataset.view === "drill" && !current) nextCard();
+}));
+
+/* Map */
+function renderLadder(){
+  const host = $("#ladder");
+  let n = 0;
+  host.innerHTML = GROUPS.map(g => {
+    const rungs = RUNGS.filter(r => r.g === g.id).map(r => {
+      n += 1;
+      const items = r.b.map(([q, id]) => `<li><span>${esc(q)}</span><button class="chip" style="--c:${gColor(STOPS[id].g)}" data-stop="${id}" aria-pressed="false">${STOPS[id].name}</button></li>`).join("");
+      return `<div class="rung" data-n="${n}"><h3>${esc(r.q)}</h3><ul class="branches">${items}</ul></div>`;
+    }).join("");
+    return `<section class="group" style="--c:${g.c}"><h2>${g.title}<small>${g.sub}</small></h2>${rungs}</section>`;
+  }).join("");
+  host.addEventListener("click", e => {
+    const chip = e.target.closest(".chip");
+    if (!chip) return;
+    chip.classList.add("revealed");
+    showStop(chip.dataset.stop, chip);
+  });
+}
+function showStop(id, chip){
+  const s = STOPS[id];
+  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === chip));
+  const d = $("#detail");
+  d.style.setProperty("--c", gColor(s.g));
+  const group = GROUPS.find(g => g.id === s.g).title.split(":")[0];
+  d.innerHTML = `<h2>${s.name}</h2><p class="where">${group} line</p>
+    <h4>Signal</h4><p>${esc(s.signal)}</p>
+    <h4>Anchor problems</h4><div class="anchors">${s.anchors.map(([t, ok]) => `<span class="anchor${ok ? " solved" : ""}">${esc(t)}</span>`).join("")}</div>
+    <h4>Tidbit</h4><p class="tidbit">${esc(s.tidbit)}</p>
+    <h4>Template</h4><pre><code>${esc(s.code)}</code></pre>
+    <h4>Trap</h4><p class="trap"><b>Watch out.</b> ${esc(s.trap)}</p>`;
+  d.classList.remove("flash"); void d.offsetWidth; d.classList.add("flash");
+  if (window.matchMedia("(max-width:860px)").matches) d.scrollIntoView({behavior:"smooth", block:"start"});
+}
+$("#hideToggle").addEventListener("change", e => {
+  $("#ladder").classList.toggle("hide", e.target.checked);
+  if (e.target.checked) document.querySelectorAll(".chip").forEach(c => c.classList.remove("revealed"));
+});
+
+/* Drill */
+let mode = "all", current = null, answered = false;
+function pool(){
+  if (mode === "traps") return DRILL.filter(d => d[6]);
+  if (mode === "solved") return DRILL.filter(d => d[5]);
+  if (mode === "missed") return DRILL.filter(d => state.missed.includes(d[0]));
+  return DRILL;
+}
+function shuffle(a){ for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function renderScore(){
+  const pct = state.seen ? Math.round(100 * state.right / state.seen) : 0;
+  $("#score").innerHTML = `<span>Answered <b>${state.seen}</b></span><span>Correct <b>${pct}%</b></span><span>Still missed <b>${state.missed.length}</b></span>`;
+}
+function nextCard(){
+  const p = pool();
+  renderScore();
+  if (!p.length){
+    current = null;
+    $("#card").innerHTML = mode === "missed"
+      ? `<h2>Nothing missed</h2><p>Every problem you got wrong has since been answered correctly. Switch to All problems or Traps only.</p>`
+      : `<h2>No problems here</h2>`;
+    return;
+  }
+  let pick = p[Math.floor(Math.random() * p.length)];
+  if (current && p.length > 1){ while (pick === current) pick = p[Math.floor(Math.random() * p.length)]; }
+  current = pick; answered = false;
+  const [lc, name, stop, , , solved, trap, lure] = pick;
+  const opts = new Set([stop]);
+  if (lure) opts.add(lure);
+  // Prefer distractors from the same line so the choice is not obvious
+  const same = shuffle(Object.keys(STOPS).filter(k => !opts.has(k) && STOPS[k].g === STOPS[stop].g));
+  const rest = shuffle(Object.keys(STOPS).filter(k => !opts.has(k) && STOPS[k].g !== STOPS[stop].g));
+  while (opts.size < 3 && same.length) opts.add(same.pop());
+  while (opts.size < 4) opts.add(rest.pop());
+  const list = shuffle([...opts]);
+  $("#card").innerHTML = `<span class="lc">LC ${lc}</span><h2>${esc(name)}</h2>
+    <div class="flags">${solved ? "<span>You have solved this one</span>" : ""}${trap ? "<span>Trap problem</span>" : ""}</div>
+    <div class="opts">${list.map(k => `<button data-k="${k}">${STOPS[k].name}</button>`).join("")}</div>
+    <div class="result" id="result"></div>`;
+  $("#card .opts").addEventListener("click", onAnswer);
+}
+function onAnswer(e){
+  const b = e.target.closest("button");
+  if (!b || answered) return;
+  answered = true;
+  const [lc, , stop, path, why] = current;
+  const ok = b.dataset.k === stop;
+  state.seen += 1;
+  if (ok){ state.right += 1; state.missed = state.missed.filter(x => x !== lc); }
+  else if (!state.missed.includes(lc)) state.missed.push(lc);
+  save(); renderScore();
+  document.querySelectorAll("#card .opts button").forEach(x => {
+    x.disabled = true;
+    if (x.dataset.k === stop) x.classList.add("right");
+    else if (x === b) x.classList.add("wrong");
+  });
+  $("#result").innerHTML = `<div class="verdict ${ok ? "ok" : "no"}">${ok ? "Correct." : "Not quite. It is " + STOPS[stop].name + "."}</div>
+    <p class="path">Route: ${esc(path)}</p><p>${esc(why)}</p>
+    <button class="next" id="nextBtn">Next problem</button>`;
+  $("#nextBtn").addEventListener("click", nextCard);
+  $("#nextBtn").focus();
+}
+$("#modes").addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  if (b.dataset.mode === "reset"){
+    state.missed = []; state.seen = 0; state.right = 0; save(); nextCard(); return;
+  }
+  mode = b.dataset.mode;
+  document.querySelectorAll("#modes button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  nextCard();
+});
+
+renderLadder(); renderScore(); nextCard();
+</script>
+</body>
+</html>

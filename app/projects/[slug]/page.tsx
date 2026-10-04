@@ -61,6 +61,7 @@ export default async function ProjectDetailPage({
         </Link>
 
         <h1 className="text-5xl md:text-7xl font-black uppercase mb-6 tracking-tighter">{project.title}</h1>
+        <p className="font-mono text-sm uppercase tracking-wider mb-6">{project.projectLabel}</p>
 
         <p className="text-xl md:text-2xl font-bold text-muted dark:text-[var(--dm-muted)] mb-8 leading-relaxed">
           {project.description}

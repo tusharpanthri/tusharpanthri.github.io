@@ -9,11 +9,11 @@ export const resume = {
   linkedin: "https://www.linkedin.com/in/tushar-panthri-963ab814a/",
   resumeUrl: "resume.pdf",
   profileImage: "profile.png",
-  summary: "Software Engineer with 3+ years building backend services, REST APIs, and distributed systems on AWS for financial clients. Hands-on with Python, Java, JavaScript, SQL, and full SDLC ownership including unit testing, CI/CD, code review, and on-call rotations.",
+  summary: "Software Engineer with 2+ years building Python, Spark, and AWS data services for American Express and Ameriprise Financial as a Tata Consultancy Services consultant. Started in API performance testing at Cognizant and now builds payment-domain and distributed systems projects. M.S. in Computer Science and Applied Mathematics & Statistics, Stony Brook University.",
   proof: [
-    { value: "−40%", label: "p95 latency on REST services serving 18 U.S. commercial channels at Amex" },
-    { value: "−80%", label: "daily load time on AWS pipelines built with Python, Spark and Lambda" },
-    { value: "−95%", label: "production errors after rebuilding Aladdin ↔ Snowflake integrations with retries" }
+    { value: "18", label: "U.S. marketing channels supported by impression pipelines at American Express" },
+    { value: "−30%", label: "pipeline latency versus on-premises processing at Ameriprise" },
+    { value: "20+", label: "REST APIs load-tested during an on-premises to AWS migration at Cognizant" }
   ],
   githubUsername: "tusharpanthri",
   stack: [
@@ -80,51 +80,95 @@ export const resume = {
   experience: [
     {
       company: "American Express",
-      role: "Software Engineer",
+      role: "Software Engineer · TCS consultant, EDDS Team",
       period: "Oct 2023 to Aug 2024",
       logo: "amex-logo.png",
-      impact: "Python backend services and REST endpoints for 18 U.S. commercial channels; owned SDLC for ETL microservices on AWS end to end, from design docs to on-call.",
+      impact: "Built Python and SparkSQL impression pipelines across 18 U.S. marketing channels, reconciled counts across two landing sources, and supported the data feeding downstream marketing mix models.",
       bullets: [
-        "Built backend services in Python with REST endpoints serving 18 U.S. commercial channels, achieving a 40% reduction in p95 latency.",
-        "Owned end-to-end SDLC for ETL microservices on AWS, including design, code review, and deployment with 100% success rate.",
-        "Collaborated in Agile sprints to ship BI dashboards backed by AWS Glue, contributing to design docs and on-call rotations."
+        "Built Python and SparkSQL pipelines as a Tata Consultancy Services consultant to process impression data across 18 U.S. marketing channels, supporting tracking from ad impressions to card applications.",
+        "Wrote reconciliation scripts comparing impression counts across two landing sources, flagging discrepancies before downstream reporting.",
+        "Supported the impression data feeding the team's marketing mix modeling workflow and staged query results in temporary tables for validation before production writes."
       ]
     },
     {
       company: "Ameriprise Financial",
-      role: "Software Engineer",
+      role: "Software Engineer · TCS consultant, Global Asset Management",
       period: "May 2022 to Oct 2023",
       logo: "ameriprise-logo.png",
-      impact: "Distributed data pipelines on AWS with Python, Spark and Lambda, plus BlackRock Aladdin ↔ Snowflake API integrations and a CloudWatch observability stack.",
+      impact: "Built AWS Glue ELT pipelines for holdings and ESG/MSCI data through landing, Parquet, and curated S3 zones, cutting latency by 30% versus on-premises processing. Supported event-driven ingestion and production feeds.",
       bullets: [
-        "Designed distributed data pipelines on AWS using Python, Spark, and Lambda, reducing daily load times by 80%.",
-        "Engineered REST API integrations between BlackRock Aladdin and Snowflake with retry logic, reducing production errors by 95%.",
-        "Deployed observability stack with AWS Lambda and CloudWatch for automated monitoring and 100% pipeline consistency."
+        "Engineered AWS Glue ELT jobs as a Tata Consultancy Services consultant for holdings and ESG/MSCI data, cutting pipeline latency by 30% versus prior on-premises pipelines.",
+        "Built ingestion through S3, DynamoDB Streams, and Lambda to launch Glue jobs alongside TIDAL schedules, processing 100–200 MB daily MFT drops and 8 GB monthly backfills.",
+        "Added data quality checks before Glue processing to flag invalid input with P3 alerts and avoid unnecessary compute.",
+        "Supported Athena-queryable production feeds, resolved P2 and P3 ServiceNow incidents with CloudWatch monitoring, and shipped changes through Jenkins CI in bi-weekly Agile sprints."
       ]
     },
     {
       company: "Cognizant Technology Solutions",
-      role: "Software Developer",
-      period: "June 2020 to May 2022",
-      impact: "Built Python and Java backend modules for enterprise insurance and financial applications in Agile/Scrum teams; wrote unit and integration tests and resolved production defects with QA and business analysts.",
+      role: "Programmer Analyst · Hyderabad",
+      period: "Jul 2021 to Sep 2021",
+      impact: "Performance-tested Ameriprise money-movement APIs during an on-premises to AWS migration. Load-tested 20+ REST APIs with JMeter and caught a JWT signature bypass during smoke testing before launch.",
       bullets: [
-        "Built Python and Java backend modules for enterprise insurance and financial domain client applications following Agile/Scrum delivery cycles.",
-        "Wrote unit and integration tests to validate features and catch regressions; resolved production defects via log-based root-cause analysis in collaboration with QA and business analysts."
+        "Load-tested 20+ REST APIs with JMeter during Ameriprise's on-premises to AWS migration, validating SLA compliance for money-movement services.",
+        "Mocked third-party dependencies with WireMock and monitored performance with Grafana and Kibana while observing Kubernetes autoscaling.",
+        "Caught a JWT signature bypass caused by decode() instead of verify() during smoke testing and coordinated the fix before launch."
       ]
     }
   ],
 
   projects: [
     {
+      slug: "transaction-lens",
+      title: "Transaction Lens",
+      status: "live" as const,
+      projectLabel: "In development",
+      featured: true,
+      description: "A transaction anomaly review workspace adapted from an existing project, with single-transaction assessment, bounded batch review, and directional feature contributions.",
+      headline: "A Streamlit review workspace for transaction anomaly scores from a configured API. Supports individual assessments, bounded batch review, and methodology notes; fresh training and full pipeline verification are pending.",
+      techLine: "Python · Streamlit · FastAPI · dbt",
+      tech: ["Python", "Streamlit", "FastAPI", "dbt"],
+      repoUrl: "https://github.com/tusharpanthri/transaction-lens",
+      liveUrl: null,
+      diagramImage: undefined,
+      diagramAlt: undefined,
+      details: [
+        "Adapted an inherited transaction anomaly detection project into a TransactionLens review workspace, preserving original authorship and dataset attribution.",
+        "Added single-transaction assessment, bounded batch review, directional feature contributions, and data/methodology notes using scores from the configured API.",
+        "Uses the public ULB / Worldline credit card fraud benchmark. The full dataset is currently missing; fresh training and end-to-end pipeline verification remain pending, with no model performance claims."
+      ]
+    },
+    {
+      slug: "ledger-match",
+      title: "LedgerMatch",
+      status: "live" as const,
+      projectLabel: "Local demo",
+      featured: true,
+      description: "A payment reconciliation demo comparing internal ledger records against simulated Stripe, PayPal, and bank feeds, with confidence scores and discrepancy inspection.",
+      headline: "An async FastAPI and PostgreSQL reconciliation engine with a React dashboard. Scores candidate matches across amount, fees, currency, identifiers, and dates, then surfaces mismatches, missing records, and duplicates using simulated provider data.",
+      techLine: "FastAPI · PostgreSQL · React · TypeScript · n8n · Docker",
+      tech: ["FastAPI", "PostgreSQL", "React", "TypeScript", "n8n", "Docker"],
+      repoUrl: "https://github.com/tusharpanthri/ledger-match",
+      liveUrl: null,
+      diagramImage: undefined,
+      diagramAlt: undefined,
+      details: [
+        "Matches internal payments against simulated Stripe, PayPal, and bank records using an async FastAPI API, PostgreSQL, and a React/TypeScript dashboard.",
+        "Scores amount, fees, currency, card/IBAN, VAT, and date proximity with a 65% match threshold normalized to available fields; classifies fee and amount differences, missing records, and duplicates.",
+        "Stores money as integer minor units and separates provider records into dedicated tables. Includes Docker Compose and seven n8n workflows for seeding, simulation, and reconciliation.",
+        "Extends my earlier clear-ledger project with refreshed branding, a responsive and accessible UI, USD sample data, and rewritten documentation. Provider feeds are simulated."
+      ]
+    },
+    {
       slug: "distributed-transaction-processing",
       title: "Scalable Distributed Transaction Processing System",
       status: "live" as const,
+      projectLabel: "Systems project",
       featured: true,
       description: "Sharded, fault-tolerant transaction engine in Go using Multi-Paxos leader election and Two-Phase Commit over gRPC.",
       headline: "A sharded Go transaction engine using Multi-Paxos and Two-Phase Commit over gRPC. It includes crash recovery and handles 1,000+ transactions per second across three clusters.",
       techLine: "Go · Multi-Paxos · 2PC · gRPC",
       tech: ["Go", "Multi-Paxos", "2PC", "gRPC"],
-      repoUrl: null,
+      repoUrl: "https://github.com/tusharpanthri/paxos-2pc-payments",
       liveUrl: null,
       diagramImage: "distributed-transaction-processing.png",
       diagramAlt: "Distributed transaction processing topology with a central transaction engine connected to three server clusters.",
@@ -137,6 +181,7 @@ export const resume = {
       slug: "byzantine-fault-tolerant-banking",
       title: "Byzantine Fault-Tolerant Banking System",
       status: "live" as const,
+      projectLabel: "Systems project",
       featured: true,
       description: "Byzantine fault-tolerant banking backend in Go using linear-PBFT over gRPC, tolerating f faulty replicas in a 3f+1 cluster.",
       headline: "A Go banking backend using linear-PBFT over gRPC. It provides fault tolerance across a seven-node cluster serving ten concurrent clients while reducing per-request messages toward linear complexity.",

@@ -8,6 +8,7 @@ import { Github } from '@/components/Icons';
 interface ProjectCardProps {
   slug: string;
   title: string;
+  projectLabel?: string;
   description: string;
   tech: string[];
   repoUrl?: string | null;
@@ -17,7 +18,7 @@ interface ProjectCardProps {
   diagramAlt?: string;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ slug, title, description, tech, repoUrl, liveUrl, details, diagramImage, diagramAlt }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ slug, title, projectLabel, description, tech, repoUrl, liveUrl, details, diagramImage, diagramAlt }) => {
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
 
@@ -59,6 +60,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ slug, title, description, tec
       </div>
 
       <div className="p-6 md:p-8 flex flex-col flex-1">
+        {projectLabel && <p className="font-mono text-xs uppercase tracking-wider text-muted dark:text-[var(--dm-muted)] mb-3">{projectLabel}</p>}
         <div className="flex justify-between items-start mb-4">
           <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight">{title}</h3>
           {(liveUrl || repoUrl) && (
@@ -81,6 +83,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ slug, title, description, tec
                   rel="noopener noreferrer"
                   className="p-2 bg-white dark:bg-[var(--dm-surface)] border-4 border-near-black dark:border-[var(--dm-border)] rounded-full shadow-[4px_4px_0_#11100D] dark:shadow-[4px_4px_0_var(--dm-shadow)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
                   title="GitHub Repo"
+                  aria-label={`${title} GitHub repository`}
                 >
                   <Github size={20} />
                 </a>
