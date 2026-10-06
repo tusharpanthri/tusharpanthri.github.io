@@ -39,6 +39,7 @@ export default function Header() {
       <div className="max-w-[1080px] mx-auto px-6 sm:px-10 min-h-[76px] lg:h-[76px] py-4 lg:py-0 flex flex-wrap items-center justify-between gap-5">
         <Link href="/" className="font-mono text-[15px] font-black tracking-[.04em] whitespace-nowrap">{resume.name.toLowerCase().split(' ').join('\u200a')}</Link>
         <nav aria-label="Main navigation" className="flex flex-wrap items-center gap-5 font-mono text-[13px] tracking-[.04em]">
+          <a href="/elevateme.html" title="ElevateMe — early career job sweep" className="whitespace-nowrap">ElevateMe</a>
           {NAV_ITEMS.map((item) => {
             const isActive = `${pathname.replace(/\/$/, '')}/`.startsWith(item.href);
             return <Link key={item.href} href={item.href} aria-current={isActive ? 'page' : undefined} className={isActive ? 'text-accent-red' : ''}>{item.label}</Link>;
