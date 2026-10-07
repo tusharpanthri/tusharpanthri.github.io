@@ -1,6 +1,6 @@
 # Tushar Panthri - Data Engineer Portfolio
 
-Built with **Next.js 15+**, **TypeScript**, and **Tailwind CSS 4**.
+Built with **Next.js 15+**, **TypeScript**, and **Tailwind CSS 4**. 
 
 ## 🚀 Live Site
 The site is hosted at: [https://tusharpanthri.github.io/](https://tusharpanthri.github.io/)
