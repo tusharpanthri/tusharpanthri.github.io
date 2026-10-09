@@ -20,5 +20,13 @@ export default function NYClockLine() {
     return () => clearInterval(interval);
   }, []);
 
-  return label ? <span>{label}</span> : null;
+  if (!label) return null;
+
+  const [time, status] = label.split(' · ');
+
+  return (
+    <span>
+      {time} · <a href="/feeling-lucky.html" title="Can You Recognize the Pattern? — take the coding pattern test" className="hover:underline focus-visible:underline">{status}</a>
+    </span>
+  );
 }
