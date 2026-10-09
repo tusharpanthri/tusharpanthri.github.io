@@ -43,7 +43,6 @@ export default function Header() {
             const isActive = `${pathname.replace(/\/$/, '')}/`.startsWith(item.href);
             return <Link key={item.href} href={item.href} aria-current={isActive ? 'page' : undefined} className={isActive ? 'text-accent-red' : ''}>{item.label}</Link>;
           })}
-          <a href="/break-the-system.html" className="whitespace-nowrap">Break the System</a>
           <a href={`/${resume.resumeUrl}`} download="tusharpanthri_resume.pdf" className="border-b-2 border-near-black dark:border-[var(--dm-text)] pb-0.5">resume ↓</a>
         </nav>
         <div className="flex items-center gap-2.5">

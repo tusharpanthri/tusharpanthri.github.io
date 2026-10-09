@@ -101,6 +101,13 @@ export default function Home() {
         ))}
       </section>
 
+      <aside className={`${column} pt-6 pb-4`} aria-label="Interactive challenge">
+        <div className="border-t border-near-black/20 dark:border-[var(--dm-border)] pt-6 flex flex-wrap items-center justify-between gap-4">
+          <p className="text-[16px] text-muted dark:text-[var(--dm-muted)]">A payment system. Sixty seconds of chaos. Can you keep it alive?</p>
+          <a href="/break-the-system.html" className="bg-accent-yellow text-near-black px-4 py-2.5 font-mono text-[13px] font-bold border-2 border-near-black hover:bg-accent-red focus-visible:outline-2 focus-visible:outline-offset-4 whitespace-nowrap">Feeling Brave? →</a>
+        </div>
+      </aside>
+
       {resume.posts.length > 0 && (
         <section className={`${column} pt-16 pb-4`}>
           <div className="flex flex-wrap gap-4 items-baseline justify-between mb-8">
