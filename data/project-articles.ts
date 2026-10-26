@@ -1,9 +1,14 @@
+// Nodes are placed on an 860-wide canvas: columns at x = 24, 320, 616 for the default 220-wide node.
+export interface FlowNode { id: string; label: string; detail: string[]; x: number; y: number; w?: number }
+export interface FlowEdge { from: string; to: string; label?: string; dashed?: boolean }
+export interface FlowDiagram { title: string; nodes: FlowNode[]; edges: FlowEdge[]; caption: string }
+
 export interface ProjectArticle {
   title: string;
   subtitle: string;
   introduction: string[];
   takeaway: string;
-  diagram: { title: string; steps: { label: string; detail: string }[]; caption: string };
+  diagram: FlowDiagram;
   sections: { title: string; paragraphs: string[] }[];
   references: { title: string; url: string; note: string }[];
 }
@@ -18,14 +23,25 @@ export const projectArticles: Record<string, ProjectArticle> = {
     ],
     takeaway: 'An anomaly score is a prompt for investigation, not a verdict about a person.',
     diagram: {
-      title: 'From transaction to review',
-      steps: [
-        { label: 'Transaction input', detail: 'Single record or bounded batch' },
-        { label: 'Configured API', detail: 'Request assessment and receive scores' },
-        { label: 'Review workspace', detail: 'Inspect scores and directional contributions' },
-        { label: 'Human judgment', detail: 'Read context and methodology before deciding' }
+      title: 'From raw data to review',
+      nodes: [
+        { id: 'kaggle', label: 'kaggle', detail: ['284,807 rows verified'], x: 24, y: 24 },
+        { id: 'duckdb', label: 'duckdb', detail: ['local warehouse'], x: 320, y: 24 },
+        { id: 'dbt', label: 'dbt', detail: ['bronze · silver · gold'], x: 616, y: 24 },
+        { id: 'models', label: 'models', detail: ['6 variants × 5 seeds', 'chronological split'], x: 616, y: 158 },
+        { id: 'mlflow', label: 'mlflow', detail: ['champion / challenger', 'every run logged'], x: 320, y: 158 },
+        { id: 'fastapi', label: 'fastapi', detail: ['scoring + SHAP', 'p50 / p99 load-tested'], x: 24, y: 158 },
+        { id: 'streamlit', label: 'streamlit', detail: ['review workspace'], x: 24, y: 310 }
       ],
-      caption: 'The implemented review path. Dataset ingestion and fresh model training are separate from this flow.'
+      edges: [
+        { from: 'kaggle', to: 'duckdb' },
+        { from: 'duckdb', to: 'dbt' },
+        { from: 'dbt', to: 'models', label: 'gold table' },
+        { from: 'models', to: 'mlflow' },
+        { from: 'mlflow', to: 'fastapi', label: 'champion' },
+        { from: 'fastapi', to: 'streamlit', label: 'scores' }
+      ],
+      caption: 'The repository pipeline. Ingestion, dbt and training run as batch steps; the review workspace reads scores from the FastAPI service rather than computing its own.'
     },
     sections: [
       { title: 'A Pokédex entry is useful. It is not the whole battle.', paragraphs: [
@@ -60,13 +76,22 @@ export const projectArticles: Record<string, ProjectArticle> = {
     takeaway: 'A useful reconciliation result explains both the match and the reason for disagreement.',
     diagram: {
       title: 'Two sources, one inspectable result',
-      steps: [
-        { label: 'Payment records', detail: 'Internal ledger + simulated provider tables' },
-        { label: 'Matching engine', detail: 'Amount, fees, currency, identifiers, and date' },
-        { label: 'Classification', detail: 'Matched, fee difference, missing, duplicate, or mismatch' },
-        { label: 'React dashboard', detail: 'Inspect results, scoring, and trends' }
+      nodes: [
+        { id: 'n8n', label: 'n8n', detail: ['7 workflows', 'seed · simulate'], x: 24, y: 24 },
+        { id: 'api', label: 'fastapi', detail: ['async routers', 'SQLAlchemy services'], x: 320, y: 24 },
+        { id: 'postgres', label: 'postgresql', detail: ['ledger + provider tables', 'integer minor units'], x: 616, y: 24 },
+        { id: 'engine', label: 'matching engine', detail: ['amount · fees · FX · date', '65% match threshold'], x: 616, y: 176 },
+        { id: 'classify', label: 'classification', detail: ['matched · fee · mismatch', 'missing · duplicate'], x: 320, y: 176 },
+        { id: 'web', label: 'react dashboard', detail: ['tanstack · recharts', 'inspect + trends'], x: 24, y: 176 }
       ],
-      caption: 'PostgreSQL preserves the source records; the FastAPI engine computes matches for the dashboard. Provider feeds are simulated.'
+      edges: [
+        { from: 'n8n', to: 'api', label: 'HTTP' },
+        { from: 'api', to: 'postgres' },
+        { from: 'postgres', to: 'engine', label: 'candidate pairs' },
+        { from: 'engine', to: 'classify' },
+        { from: 'classify', to: 'web' }
+      ],
+      caption: 'n8n drives the demo through the API; PostgreSQL keeps internal and provider records in separate tables. Provider feeds are simulated.'
     },
     sections: [
       { title: 'Equivalent exchange, with a receipt', paragraphs: [
@@ -105,13 +130,26 @@ export const projectArticles: Record<string, ProjectArticle> = {
     takeaway: 'Replica agreement and cross-shard atomicity solve different problems. A transfer needs both.',
     diagram: {
       title: 'One transfer, two levels of agreement',
-      steps: [
-        { label: 'Browser terminal', detail: 'Transfer command through WebSocket gateway' },
-        { label: '2PC coordinator', detail: 'Prepare both shards and collect their votes' },
-        { label: 'Shard quorums', detail: 'Each shard replicates prepared state with Multi-Paxos' },
-        { label: 'Decision delivery', detail: 'Commit on unanimous yes; otherwise abort' }
+      nodes: [
+        { id: 'terminal', label: 'browser terminal', detail: ['put · transfer · kill', 'partition · heal'], x: 24, y: 24 },
+        { id: 'gateway', label: 'websocket gateway', detail: ['control plane', 'one result per command'], x: 320, y: 24 },
+        { id: 'coordinator', label: '2PC coordinator', detail: ['opens tx, collects votes', 'commit is final'], x: 616, y: 24 },
+        { id: 'debit', label: 'sender shard', detail: ['multi-paxos · 3 replicas', 'reserve → debit'], x: 616, y: 176 },
+        { id: 'credit', label: 'receiver shard', detail: ['multi-paxos · 3 replicas', 'check → credit'], x: 320, y: 176 },
+        { id: 'decision', label: 'decision', detail: ['all YES → COMMIT', 'otherwise ABORT'], x: 468, y: 328 },
+        { id: 'faults', label: 'fault injection', detail: ['dropped sends', 'network partitions'], x: 24, y: 176 }
       ],
-      caption: 'Cross-shard path. A same-shard transfer uses one replicated log entry and skips Two-Phase Commit.'
+      edges: [
+        { from: 'terminal', to: 'gateway', label: 'ws' },
+        { from: 'gateway', to: 'coordinator' },
+        { from: 'coordinator', to: 'debit', label: 'PREPARE' },
+        { from: 'coordinator', to: 'credit', label: 'PREPARE' },
+        { from: 'debit', to: 'decision', label: 'quorum vote' },
+        { from: 'credit', to: 'decision', label: 'quorum vote' },
+        { from: 'terminal', to: 'faults', label: 'kill · split', dashed: true },
+        { from: 'faults', to: 'credit', dashed: true }
+      ],
+      caption: 'Cross-shard path; dashed lines are failure injection at the transport layer. A same-shard transfer uses one replicated log entry and skips Two-Phase Commit.'
     },
     sections: [
       { title: 'Shadow clones do not automatically agree', paragraphs: [
@@ -155,13 +193,25 @@ export const projectArticles: Record<string, ProjectArticle> = {
     takeaway: 'Trust comes from compatible evidence across replicas, not from the confidence of one reply.',
     diagram: {
       title: 'From proposal to an agreed operation',
-      steps: [
-        { label: 'Client request', detail: 'Submit a banking operation to the primary' },
-        { label: 'Pre-prepare', detail: 'Propose an ordering for the operation' },
-        { label: 'Prepare + commit', detail: 'Replicas establish evidence for agreement' },
-        { label: 'Execute + reply', detail: 'Apply the agreed operation; client checks replies' }
+      nodes: [
+        { id: 'clients', label: 'clients', detail: ['10 concurrent', 'gRPC requests'], x: 24, y: 24 },
+        { id: 'primary', label: 'primary', detail: ['orders requests', 'assigns sequence #'], x: 320, y: 24 },
+        { id: 'replicas', label: 'replica cluster', detail: ['7 nodes · 3f+1', 'tolerates f = 2'], x: 616, y: 24 },
+        { id: 'agreement', label: 'agreement', detail: ['prepare · commit', 'linear message flow'], x: 616, y: 176 },
+        { id: 'execute', label: 'execute', detail: ['apply in order', 'bank ledger'], x: 320, y: 176 },
+        { id: 'reply', label: 'reply', detail: ['client waits for', 'f+1 matching'], x: 24, y: 176 },
+        { id: 'viewchange', label: 'view change', detail: ['replaces a faulty', 'primary'], x: 616, y: 328 }
       ],
-      caption: 'Conceptual PBFT flow, not an exact message-routing diagram of this linear variant. View change replaces a faulty primary.'
+      edges: [
+        { from: 'clients', to: 'primary', label: 'request' },
+        { from: 'primary', to: 'replicas', label: 'pre-prepare' },
+        { from: 'replicas', to: 'agreement' },
+        { from: 'agreement', to: 'execute' },
+        { from: 'execute', to: 'reply' },
+        { from: 'reply', to: 'clients', label: 'f+1 replies' },
+        { from: 'agreement', to: 'viewchange', label: 'primary suspected', dashed: true }
+      ],
+      caption: 'Conceptual PBFT flow, not an exact message-routing diagram of this linear variant. The dashed path is a view change, which replaces a faulty primary.'
     },
     sections: [
       { title: 'The unreliable narrator becomes a server', paragraphs: [

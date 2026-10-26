@@ -130,10 +130,23 @@ html[data-theme="dark"] .grain-overlay {
   50% { opacity: .35; }
 }
 
+/* Architecture flow: moving packets, swapped for static dots when motion is reduced */
+.flow-dot {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .editorial-marquee,
   .availability-dot {
     animation: none;
+  }
+
+  .flow-packet {
+    display: none;
+  }
+
+  .flow-dot {
+    display: inline;
   }
 }
 

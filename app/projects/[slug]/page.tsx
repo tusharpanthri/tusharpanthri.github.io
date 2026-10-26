@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { ExternalLink, ArrowLeft } from 'lucide-react';
 import { Github } from '@/components/Icons';
 import ContactCTA from '@/components/ContactCTA';
+import ArchitectureFlow from '@/components/ArchitectureFlow';
 import { resume } from '@/data/resume';
 import { projectArticles } from '@/data/project-articles';
 
@@ -131,19 +132,7 @@ export default async function ProjectDetailPage({
                 {article.sections.map((section, index) => <li key={section.title}><a href={`#section-${index + 1}`} className="underline underline-offset-4 hover:text-accent-red">{section.title}</a></li>)}
               </ol>
             </nav>
-            <figure className="my-10 border-2 border-near-black dark:border-[var(--dm-border)] bg-white dark:bg-[var(--dm-surface)] p-5 md:p-7">
-              <h2 className="text-xl font-bold mb-6">{article.diagram.title}</h2>
-              <ol className="grid gap-4 sm:grid-cols-2">
-                {article.diagram.steps.map((step, index) => (
-                  <li key={step.label} className="relative border-2 border-near-black dark:border-[var(--dm-border)] p-4">
-                    <span className="font-mono text-xs bg-accent-yellow text-near-black px-2 py-1 inline-block mb-3">0{index + 1} {index < article.diagram.steps.length - 1 ? '→' : '✓'}</span>
-                    <p className="font-bold">{step.label}</p>
-                    <p className="text-sm leading-relaxed mt-2 text-muted dark:text-[var(--dm-muted)]">{step.detail}</p>
-                  </li>
-                ))}
-              </ol>
-              <figcaption className="text-sm leading-relaxed text-muted dark:text-[var(--dm-muted)] mt-5">{article.diagram.caption}</figcaption>
-            </figure>
+            <ArchitectureFlow diagram={article.diagram} name={slug} />
             {article.sections.map((section, index) => (
               <section key={section.title} id={`section-${index + 1}`} className="scroll-mt-28 my-12">
                 <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-5">{section.title}</h2>
